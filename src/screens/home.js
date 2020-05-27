@@ -36,7 +36,9 @@ const Home = ({navigation}) => {
         <View style={styles.appButtonStyle}>
           <Button
             title="HMS / GMS Check"
-            onPress={commingSoon}
+            onPress={() => {
+              navigation.navigate('Check');
+            }}
             style={styles.appButton}
           />
         </View>

@@ -12,6 +12,7 @@ import {createAppContainer} from 'react-navigation';
 
 import Home from './src/screens/Home';
 import LocationPage from './src/screens/Location';
+import Check from './src/screens/Check';
 
 const AppNavigator = createStackNavigator(
   {
@@ -20,7 +21,7 @@ const AppNavigator = createStackNavigator(
       navigationOptions: {
         headerTitle: 'HMS Kits',
       },
-      path: 'home',
+      path: 'Home',
     },
     Location: {
       screen: LocationPage,
@@ -28,6 +29,13 @@ const AppNavigator = createStackNavigator(
         headerTitle: 'HMS Location Kit',
       },
       path: 'Location',
+    },
+    Check: {
+      screen: Check,
+      navigationOptions: {
+        headerTitle: 'HMS / GMS Check',
+      },
+      path: 'Check',
     },
   },
   {
