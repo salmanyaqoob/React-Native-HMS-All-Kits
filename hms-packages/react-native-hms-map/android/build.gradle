@@ -1,0 +1,41 @@
+buildscript {
+    repositories {
+        maven { url 'https://developer.huawei.com/repo/' }
+        google()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.3.0'
+    }
+}
+
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 28
+    buildToolsVersion "28.0.3"
+
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+    }
+    lintOptions {
+        abortOnError false
+    }
+}
+
+repositories {
+    maven { url 'https://developer.huawei.com/repo/' }
+    google()
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.facebook.react:react-native:0.62.2'
+    implementation 'com.huawei.hms:location:4.0.2.300'
+    implementation 'com.huawei.hms:maps:4.0.1.300'
+}
+

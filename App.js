@@ -13,6 +13,7 @@ import {createAppContainer} from 'react-navigation';
 import Home from './src/screens/Home';
 import LocationPage from './src/screens/Location';
 import Check from './src/screens/Check';
+import Map from './src/screens/Map';
 
 const AppNavigator = createStackNavigator(
   {
@@ -36,6 +37,13 @@ const AppNavigator = createStackNavigator(
         headerTitle: 'HMS / GMS Check',
       },
       path: 'Check',
+    },
+    Map: {
+      screen: Map,
+      navigationOptions: {
+        headerTitle: 'Huawei Map',
+      },
+      path: 'Map',
     },
   },
   {

@@ -1,4 +1,6 @@
 apply plugin: "com.android.application"
+apply plugin: 'com.huawei.agconnect'
+
 
 import com.android.build.OutputFile
 
@@ -151,6 +153,13 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+            storeFile file("android.jks")
+            storePassword "android"
+            keyAlias "android"
+            keyPassword "android"
+            v2SigningEnabled true
+        }
     }
     buildTypes {
         debug {
@@ -159,10 +168,15 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://facebook.github.io/react-native/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     packagingOptions {
@@ -210,6 +224,11 @@ dependencies {
     implementation 'com.huawei.hms:hwid:4.0.1.300'
 //    implementation 'com.google.android.gms:play-services-auth:17.0.0'
     implementation "com.google.android.gms:play-services-base:17.2.1"
+
+
+    implementation 'com.huawei.hms:maps:4.0.1.301'
+    implementation 'com.huawei.hms:hianalytics:4.0.3.300'
+    implementation 'com.huawei.hms:push:4.0.3.300'
 
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";

@@ -12,11 +12,7 @@ import {
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 
-// import {NavigationContainer} from '@react-navigation/native';
-// import {createStackNavigator} from '@react-navigation/stack';
-
 const Home = ({navigation}) => {
-  //   alert(navigation);
   const commingSoon = () => {
     toast('Comming Soon');
   };
@@ -24,7 +20,6 @@ const Home = ({navigation}) => {
   const toast = msg => {
     ToastAndroid.show(msg, ToastAndroid.SHORT);
   };
-  //   toast('Home Screen Loads');
 
   return (
     <SafeAreaView style={styles.safeAreaStyle}>
@@ -56,7 +51,9 @@ const Home = ({navigation}) => {
         <View style={styles.appButtonStyle}>
           <Button
             title="Huawei Map"
-            onPress={commingSoon}
+            onPress={() => {
+              navigation.navigate('Map');
+            }}
             style={styles.appButton}
           />
         </View>

@@ -39,7 +39,8 @@
     "react-native-screens": "^2.8.0",
     "react-navigation": "^4.3.9",
     "react-navigation-stack": "^2.5.1",
-    "react-native-hms-location": "./hms-packages/react-native-hms-location"
+    "react-native-hms-location": "./hms-packages/react-native-hms-location",
+    "react-native-hms-map": "./hms-packages/react-native-hms-map"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
