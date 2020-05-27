@@ -7,11 +7,39 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "clean": "cd ./android && .\\gradlew clean && .\\gradlew cleanBuildCache && cd ../"
   },
+  "files": [
+    "android/app/src",
+    "android/app/_BUCK",
+    "android/app/build.gradle",
+    "android/app/build_defs.bzl",
+    "android/app/proguard-rules.pro",
+    "android/gradle",
+    "android/build.gradle",
+    "android/gradlew",
+    "android/gradlew.bat",
+    "android/settings.gradle",
+    "assets",
+    "__tests__",
+    "*.js",
+    "*.json"
+  ],
   "dependencies": {
+    "@react-native-community/masked-view": "^0.1.10",
+    "@react-navigation/native": "^5.4.3",
+    "@react-navigation/stack": "^5.4.0",
     "react": "16.11.0",
-    "react-native": "0.62.2"
+    "react-native": "0.62.2",
+    "react-native-gesture-handler": "^1.6.1",
+    "react-native-reanimated": "^1.9.0",
+    "react-native-safe-area-context": "^2.0.3",
+    "react-native-safe-area-view": "^1.1.1",
+    "react-native-screens": "^2.8.0",
+    "react-navigation": "^4.3.9",
+    "react-navigation-stack": "^2.5.1",
+    "react-native-hms-location": "./hms-packages/react-native-hms-location"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",

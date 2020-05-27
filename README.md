@@ -1,1 +1,1 @@
-React-Native-HMS-Kits
+React Native All HMS Kits

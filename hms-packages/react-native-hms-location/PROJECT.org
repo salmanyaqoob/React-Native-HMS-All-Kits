@@ -1,0 +1,58 @@
+* RNGeofenceModule
+** TODO Implement RNGeofenceModule.deleteGeofenceList
+Two variations:
+- [ ] byId
+- [X] by pendingIntent
+I may need to only implement. Not sure how first one works, the id may be the uniqueId of geofences. Can't test.
+** DONE Fix setMockLocation permission error
+[[file:/mnt/c/Users/i00536895/AppData/Roaming/eSpace_Desktop/UserData/i00536895/imagefiles/49847A3C-30AF-43C7-A870-71F2733C3C26.png]]
+- FIX :: Need to set =Mock Location Provider= from =Developer Options=
+
+* RNActivityIdentificationModule
+** TODO Broadcast check if app is foreground, may crash otherwise
+- https://reactnative.dev/docs/headless-js-android.html
+- https://www.journaldev.com/10356/android-broadcastreceiver-example-tutorial
+** DONE LocationUtils.fromHWLocationToWritableMap some data is not available
+Commented data is not available. Need to check etc.
+[[file:/mnt/c/Users/i00536895/AppData/Roaming/eSpace_Desktop/UserData/i00536895/imagefiles/79BAD796-4C63-4F6A-A7BA-EA5A9F82D5CA.png]]
+** TODO Check permission before executing functions
+** TODO Implement ActivityIdentificationResponse.getActivityPossiblity(int activity) in JS side
+This function simply works using ActivityIdentificationResponse.getActivityIdentificationDatas()
+#+begin_src java
+    public int getActivityPossibility(int var1) {
+        if (this.activityIdentificationDatas == null) {
+            return 0;
+        } else {
+            int var2 = this.activityIdentificationDatas.size();
+
+            for(int var3 = 0; var3 < var2; ++var3) {
+                ActivityIdentificationData var4 = (ActivityIdentificationData)this.activityIdentificationDatas.get(var3);
+                if (var4.getIdentificationActivity() == var1) {
+                    return var4.getPossibility();
+                }
+            }
+
+            return 0;
+        }
+    }
+#+end_src
+** TODO IS_EQUAL_CONVERSION method export
+** DONE Request background location permission if android.version > ??
+- [[file:android/src/main/java/com/huawei/hms/rn/location/utils/PermissionUtils.java::// TODO:][Relevant code]]
+#+begin_src
+        // TODO:
+        // int accessBackgroundLocation = ActivityCompat
+        //     .checkSelfPermission(getReactApplicationContext(),
+        //                          Manifest.permission.ACCESS_BACKGROUND_LOCATION);
+        // boolean hasBackgroundLocation = accessBackgroundLocation == PackageManager.PERMISSION_GRANTED;
+#+end_src
+** DONE Request permissions
+* TODO Remove BroadcastListeners if user requests
+Do it on delete/remove functions.
+* TODO On JS side, convert doubles to longs
+Some longs are converted to double before sending to JS side, convert them back to JS ints.
+* Demo
+** TODO After adding LocationSettingsRequest, update demo App.js
+- We use LocationRequest instead of LocationSettingsRequest, fix that
+* NOTES
+- Need to set =Mock Location Provider= from =Developer Options=
