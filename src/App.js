@@ -10,12 +10,13 @@ import React from 'react';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createAppContainer} from 'react-navigation';
 
-import Home from './src/screens/Home';
-import LocationPage from './src/screens/Location';
-import Check from './src/screens/Check';
-import Map from './src/screens/Map';
-import Push from './src/screens/Push';
-import DataPage from './src/screens/push-screen/DataPage';
+import Home from './screens/Home';
+import LocationPage from './screens/Location';
+import Check from './screens/Check';
+import Map from './screens/Map';
+import Push from './screens/Push';
+import DataPage from './screens/push-screen/DataPage';
+import Analytics from './screens/Analytics';
 
 const AppNavigator = createStackNavigator(
   {
@@ -60,6 +61,13 @@ const AppNavigator = createStackNavigator(
         headerTitle: 'Huawei Push Data Page',
       },
       path: 'DataPage',
+    },
+    Analytics: {
+      screen: Analytics,
+      navigationOptions: {
+        headerTitle: 'Huawei Analytics',
+      },
+      path: 'Analytics',
     },
   },
   {

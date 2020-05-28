@@ -71,7 +71,9 @@ const Home = ({navigation}) => {
         <View style={styles.appButtonStyle}>
           <Button
             title="Huawei Analytics"
-            onPress={commingSoon}
+            onPress={() => {
+              navigation.navigate('Analytics');
+            }}
             style={styles.appButton}
           />
         </View>

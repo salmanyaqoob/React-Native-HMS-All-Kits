@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.huawei.hianalytics">
+    <application>
+    <provider
+        android:authorities="${applicationId}.hasdkinitprovider"
+        android:name="com.huawei.hianalytics.HaSdkInitProvider"
+        android:exported="false"/>
+    </application>
+</manifest>

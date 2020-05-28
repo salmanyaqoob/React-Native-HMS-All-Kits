@@ -41,7 +41,8 @@
     "react-navigation-stack": "^2.5.1",
     "react-native-hms-location": "./hms-packages/react-native-hms-location",
     "react-native-hms-map": "./hms-packages/react-native-hms-map",
-    "react-native-hwpush": "./hms-packages/react-native-hwpush"
+    "react-native-hwpush": "./hms-packages/react-native-hwpush",
+    "react-native-ha-interface": "./hms-packages/react-native-ha-interface"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",

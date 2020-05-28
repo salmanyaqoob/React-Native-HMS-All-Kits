@@ -1,0 +1,35 @@
+{
+  "name": "react-native-ha-interface",
+  "title": "React Native Ha Interface",
+  "version": "1.0.0",
+  "baseversion": "4.0",
+  "subversion": "0.300",
+  "description": "Huawei analytics kit SDK for react native application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "",
+    "url": "",
+    "baseUrl": ""
+  },
+  "keywords": [
+    "react-native"
+  ],
+  "author": {
+    "name": "Huawei",
+    "email": "developer@huawei.com"
+  },
+  "license": "MIT",
+  "licenseFilename": "LICENSE",
+  "readmeFilename": "README.md",
+  "peerDependencies": {
+    "react": "^16.8.1",
+    "react-native": ">=0.59.0-rc.0 <1.0.x"
+  },
+  "devDependencies": {
+    "react": "^16.8.3",
+    "react-native": "^0.59.10"
+  }
+}
