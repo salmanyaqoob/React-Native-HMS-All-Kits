@@ -14,6 +14,8 @@ import Home from './src/screens/Home';
 import LocationPage from './src/screens/Location';
 import Check from './src/screens/Check';
 import Map from './src/screens/Map';
+import Push from './src/screens/Push';
+import DataPage from './src/screens/push-screen/DataPage';
 
 const AppNavigator = createStackNavigator(
   {
@@ -44,6 +46,20 @@ const AppNavigator = createStackNavigator(
         headerTitle: 'Huawei Map',
       },
       path: 'Map',
+    },
+    Push: {
+      screen: Push,
+      navigationOptions: {
+        headerTitle: 'Huawei Push',
+      },
+      path: 'Push',
+    },
+    DataPage: {
+      screen: DataPage,
+      navigationOptions: {
+        headerTitle: 'Huawei Push Data Page',
+      },
+      path: 'DataPage',
     },
   },
   {

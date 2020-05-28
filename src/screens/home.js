@@ -61,7 +61,9 @@ const Home = ({navigation}) => {
         <View style={styles.appButtonStyle}>
           <Button
             title="HMS Push"
-            onPress={commingSoon}
+            onPress={() => {
+              navigation.navigate('Push');
+            }}
             style={styles.appButton}
           />
         </View>
