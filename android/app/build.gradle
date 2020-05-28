@@ -222,7 +222,7 @@ dependencies {
         exclude group:'com.facebook.flipper'
     }
 
-    implementation 'com.huawei.hms:hwid:4.0.1.300'
+    implementation 'com.huawei.hms:hwid:3.0.3.301'
 //    implementation 'com.google.android.gms:play-services-auth:17.0.0'
     implementation "com.google.android.gms:play-services-base:17.2.1"
 

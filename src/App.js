@@ -17,6 +17,7 @@ import Map from './screens/Map';
 import Push from './screens/Push';
 import DataPage from './screens/push-screen/DataPage';
 import Analytics from './screens/Analytics';
+import Account from './screens/Account';
 
 const AppNavigator = createStackNavigator(
   {
@@ -68,6 +69,13 @@ const AppNavigator = createStackNavigator(
         headerTitle: 'Huawei Analytics',
       },
       path: 'Analytics',
+    },
+    Account: {
+      screen: Account,
+      navigationOptions: {
+        headerTitle: 'Huawei Account',
+      },
+      path: 'Account',
     },
   },
   {

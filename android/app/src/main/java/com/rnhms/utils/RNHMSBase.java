@@ -1,4 +1,4 @@
-package com.rnhms;
+package com.rnhms.utils;
 
 import android.widget.Toast;
 import android.content.Context;

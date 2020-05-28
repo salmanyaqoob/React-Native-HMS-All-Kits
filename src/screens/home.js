@@ -77,6 +77,16 @@ const Home = ({navigation}) => {
             style={styles.appButton}
           />
         </View>
+
+        <View style={styles.appButtonStyle}>
+          <Button
+            title="Huawei Account"
+            onPress={() => {
+              navigation.navigate('Account');
+            }}
+            style={styles.appButton}
+          />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
