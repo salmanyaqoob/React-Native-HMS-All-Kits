@@ -6,80 +6,86 @@
  * @flow strict-local
  */
 
-import React from 'react';
-import {createStackNavigator} from 'react-navigation-stack';
-import {createAppContainer} from 'react-navigation';
+import React from "react";
+import {createStackNavigator} from "react-navigation-stack";
+import {createAppContainer} from "react-navigation";
 
-import Home from './screens/Home';
-import LocationPage from './screens/Location';
-import Check from './screens/Check';
-import Map from './screens/Map';
-import Push from './screens/Push';
-import DataPage from './screens/push-screen/DataPage';
-import Analytics from './screens/Analytics';
-import Account from './screens/Account';
+import {Colors} from "react-native/Libraries/NewAppScreen";
+
+import Home from "./screens/Home";
+import LocationPage from "./screens/Location";
+import Check from "./screens/Check";
+import Map from "./screens/Map";
+import Push from "./screens/Push";
+import DataPage from "./screens/push-screen/DataPage";
+import Analytics from "./screens/Analytics";
+import Account from "./screens/Account";
 
 const AppNavigator = createStackNavigator(
   {
     Home: {
       screen: Home,
       navigationOptions: {
-        headerTitle: 'HMS Kits',
+        headerTitle: "React Native HMS Kits",
       },
-      path: 'Home',
+      path: "Home",
     },
     Location: {
       screen: LocationPage,
       navigationOptions: {
-        headerTitle: 'HMS Location Kit',
+        headerTitle: "HMS Location Kit",
       },
-      path: 'Location',
+      path: "Location",
     },
     Check: {
       screen: Check,
       navigationOptions: {
-        headerTitle: 'HMS / GMS Check',
+        headerTitle: "HMS / GMS Check",
       },
-      path: 'Check',
+      path: "Check",
     },
     Map: {
       screen: Map,
       navigationOptions: {
-        headerTitle: 'Huawei Map',
+        headerTitle: "Huawei Map",
       },
-      path: 'Map',
+      path: "Map",
     },
     Push: {
       screen: Push,
       navigationOptions: {
-        headerTitle: 'Huawei Push',
+        headerTitle: "Huawei Push",
       },
-      path: 'Push',
+      path: "Push",
     },
     DataPage: {
       screen: DataPage,
       navigationOptions: {
-        headerTitle: 'Huawei Push Data Page',
+        headerTitle: "Huawei Push Data Page",
       },
-      path: 'DataPage',
+      path: "DataPage",
     },
     Analytics: {
       screen: Analytics,
       navigationOptions: {
-        headerTitle: 'Huawei Analytics',
+        headerTitle: "Huawei Analytics",
       },
-      path: 'Analytics',
+      path: "Analytics",
     },
     Account: {
       screen: Account,
       navigationOptions: {
-        headerTitle: 'Huawei Account',
+        headerTitle: "Huawei Account",
       },
-      path: 'Account',
+      path: "Account",
     },
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: "Home",
+    headerMode: "screen",
+    defaultNavigationOptions: {
+      cardStyle: {backgroundColor: "#FFFFFF"},
+    },
   },
 );
 

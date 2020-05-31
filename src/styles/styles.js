@@ -14,99 +14,143 @@ Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
    limitations under the License.
 */
 
-import {StyleSheet} from 'react-native';
+import {StyleSheet} from "react-native";
+import {Colors} from "react-native/Libraries/NewAppScreen";
 
 export const styles = StyleSheet.create({
+  body: {
+    backgroundColor: Colors.white,
+    paddingHorizontal: 30,
+  },
   container: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
+    justifyContent: "flex-end",
+    alignItems: "center",
   },
   holder: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'absolute',
+    alignItems: "center",
+    justifyContent: "center",
+    position: "absolute",
     width: 300,
     height: 40,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     zIndex: 2,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: {width: 2, height: 0},
     shadowOpacity: 1,
     shadowRadius: 15,
     elevation: 7,
   },
   picker: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     left: 0,
     height: 50,
     width: 300,
-    color: '#000000',
+    color: "#000000",
   },
-  container10Top: {
-    flexDirection: 'row',
-    backgroundColor: '#2196F3',
+
+  sectionContainer: {
+    paddingVertical: 10,
+    backgroundColor: "#e2f5f9",
+    borderRadius: 10,
     marginTop: 10,
+  },
+  sectionHeading: {
+    color: "black",
+    fontSize: 16,
+    textAlign: "center",
+    fontWeight: "bold",
+    paddingBottom: 10,
+  },
+
+  container10Top: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginBottom: 5,
   },
 
   containerShowResultMsg: {
-    flexDirection: 'row',
-    marginTop: 10,
+    flexDirection: "row",
+    // marginTop: 10,
   },
 
   containerSeamless: {
-    flexDirection: 'row',
-    backgroundColor: '#2196F3',
+    flexDirection: "row",
+    justifyContent: "space-around",
+    // backgroundColor: "#2196F3",
   },
 
   containerTopicInput: {
-    flexDirection: 'row',
-    backgroundColor: '#2196F3',
+    flexDirection: "row",
+    backgroundColor: "#2196F3",
     marginTop: 10,
     flex: 1,
   },
   inputTopic: {
-    textAlign: 'center',
-    padding: 15,
-    color: 'white',
-    width: 360,
-    backgroundColor: '#2196F3',
+    textAlign: "center",
+    marginHorizontal: 15,
+    color: "white",
+    width: "92%",
+    backgroundColor: "#58abaa",
+  },
+
+  buttonCenter: {
+    marginBottom: 2,
+    width: 250,
+    // height: 40,
+    alignItems: "center",
+    backgroundColor: "#2196F3",
+    justifyContent: "center",
+    textAlign: "center",
   },
 
   buttonLeft: {
     marginBottom: 2,
-    width: 200,
-    height: 40,
-    alignItems: 'center',
-    backgroundColor: '#2196F3',
+    width: "auto",
+    // height: 40,
+    alignItems: "center",
+    backgroundColor: "#2196F3",
   },
   buttonRight: {
-    flexWrap: 'nowrap',
-    height: 40,
-    alignItems: 'flex-start',
-    backgroundColor: '#2196F3',
+    flexWrap: "nowrap",
+    // height: 40,
+    alignItems: "flex-start",
+    backgroundColor: "#2196F3",
+  },
+
+  buttonTextSmall: {
+    textAlign: "center",
+    padding: 4,
+    color: "white",
+    // width: 200,
+    // minWidth: 140,
+    height: 26,
+    alignItems: "center",
+    textTransform: "none",
   },
 
   buttonText: {
-    textAlign: 'center',
-    padding: 15,
-    color: 'white',
-    width: 200,
-    alignItems: 'center',
-    textTransform: 'none',
+    textAlign: "center",
+    padding: 10,
+    color: "white",
+    // width: 200,
+    minWidth: 140,
+    height: 40,
+    alignItems: "center",
+    textTransform: "none",
   },
   imageView: {
     flex: 1,
-    backgroundColor: '#fff',
-    flexDirection: 'column',
+    backgroundColor: "#fff",
+    flexDirection: "column",
   },
   image: {
-    justifyContent: 'flex-start',
+    justifyContent: "flex-start",
     width: 400,
     height: 80,
   },

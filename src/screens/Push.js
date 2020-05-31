@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component} from "react";
 import {
   NativeEventEmitter,
   NativeModules,
@@ -11,17 +11,19 @@ import {
   TextInput,
   Button,
   ToastAndroid,
-} from 'react-native';
+  Image,
+} from "react-native";
 
 import {
   RNErrorEnum,
   RNReceiverEvent,
   RNRemoteMessage,
-} from 'react-native-hwpush';
+} from "react-native-hwpush";
 
-import {styles} from '../styles/styles';
+import {styles} from "../styles/styles";
+import {headerStyles} from "../styles/headerStyles";
 
-let pushResult = '';
+let pushResult = "";
 const MaxNumbers = 45;
 
 export default class Push extends Component {
@@ -29,8 +31,8 @@ export default class Push extends Component {
     super(props);
 
     this.state = {
-      receiveContent: '',
-      topic: '',
+      receiveContent: "",
+      topic: "",
       disableAutoInit: false,
       enableAutoInit: true,
     };
@@ -66,186 +68,186 @@ export default class Push extends Component {
       event => {
         pushResult =
           pushResult +
-          '----------------------------------------------------------------' +
-          '\n' +
-          'receive message content start' +
-          '\n' +
-          '----------------------------------------------------------------' +
-          '\n';
+          "----------------------------------------------------------------" +
+          "\n" +
+          "receive message content start" +
+          "\n" +
+          "----------------------------------------------------------------" +
+          "\n";
 
         const RNMessageParserSinglen = new RNRemoteMessage(event.msg);
 
         // const msg = RNMessageParserSinglen.parseMsgAllAttribute();
         const msg =
           RNRemoteMessage.COLLAPSEKEY +
-          ':' +
+          ":" +
           RNMessageParserSinglen.getCollapseKey() +
-          '\n' +
+          "\n" +
           RNRemoteMessage.DATA +
-          ':' +
+          ":" +
           RNMessageParserSinglen.getData() +
-          '\n' +
+          "\n" +
           RNRemoteMessage.DATAOFMAP +
-          ':' +
+          ":" +
           RNMessageParserSinglen.getDataOfMap() +
-          '\n' +
+          "\n" +
           RNRemoteMessage.MESSAGEID +
-          ':' +
+          ":" +
           RNMessageParserSinglen.getMessageId() +
-          '\n' +
+          "\n" +
           RNRemoteMessage.MESSAGETYPE +
-          ':' +
+          ":" +
           RNMessageParserSinglen.getMessageType() +
-          '\n' +
+          "\n" +
           RNRemoteMessage.ORIGINALURGENCY +
-          ':' +
+          ":" +
           RNMessageParserSinglen.getOriginalUrgency() +
-          '\n' +
+          "\n" +
           RNRemoteMessage.URGENCY +
-          ':' +
+          ":" +
           RNMessageParserSinglen.getUrgency() +
-          '\n' +
+          "\n" +
           RNRemoteMessage.TTL +
-          ':' +
+          ":" +
           RNMessageParserSinglen.getTtl() +
-          '\n' +
+          "\n" +
           RNRemoteMessage.SENTTIME +
-          ':' +
+          ":" +
           RNMessageParserSinglen.getSentTime() +
-          '\n' +
+          "\n" +
           RNRemoteMessage.TO +
-          ':' +
+          ":" +
           RNMessageParserSinglen.getTo() +
-          '\n' +
+          "\n" +
           RNRemoteMessage.FROM +
-          ':' +
+          ":" +
           RNMessageParserSinglen.getFrom() +
-          '\n' +
+          "\n" +
           RNRemoteMessage.TOKEN +
-          ':' +
+          ":" +
           this.getFixedNumCharacters(RNMessageParserSinglen.getToken()) +
           RNRemoteMessage.NOTIFICATION.TITLE +
-          ':' +
+          ":" +
           RNMessageParserSinglen.getNotificationTitle() +
-          '\n' +
+          "\n" +
           RNRemoteMessage.NOTIFICATION.TITLELOCALIZATIONKEY +
-          ':' +
+          ":" +
           RNMessageParserSinglen.getTitleLocalizationKey() +
-          '\n' +
+          "\n" +
           RNRemoteMessage.NOTIFICATION.TITLELOCALIZATIONARGS +
-          ':' +
+          ":" +
           RNMessageParserSinglen.getTitleLocalizationArgs() +
-          '\n' +
+          "\n" +
           RNRemoteMessage.NOTIFICATION.BODYLOCALIZATIONKEY +
-          ':' +
+          ":" +
           RNMessageParserSinglen.getBodyLocalizationKey() +
-          '\n' +
+          "\n" +
           RNRemoteMessage.NOTIFICATION.BODYLOCALIZATIONARGS +
-          ':' +
+          ":" +
           RNMessageParserSinglen.getBodyLocalizationArgs() +
-          '\n' +
+          "\n" +
           RNRemoteMessage.NOTIFICATION.BODY +
-          ':' +
+          ":" +
           RNMessageParserSinglen.getBody() +
-          '\n' +
+          "\n" +
           RNRemoteMessage.NOTIFICATION.ICON +
-          ':' +
+          ":" +
           RNMessageParserSinglen.getIcon() +
-          '\n' +
+          "\n" +
           RNRemoteMessage.NOTIFICATION.SOUND +
-          ':' +
+          ":" +
           RNMessageParserSinglen.getSound() +
-          '\n' +
+          "\n" +
           RNRemoteMessage.NOTIFICATION.TAG +
-          ':' +
+          ":" +
           RNMessageParserSinglen.getTag() +
-          '\n' +
+          "\n" +
           RNRemoteMessage.NOTIFICATION.COLOR +
-          ':' +
+          ":" +
           RNMessageParserSinglen.getColor() +
-          '\n' +
+          "\n" +
           RNRemoteMessage.NOTIFICATION.CLICKACTION +
-          ':' +
+          ":" +
           RNMessageParserSinglen.getClickAction() +
-          '\n' +
+          "\n" +
           RNRemoteMessage.NOTIFICATION.CHANNELID +
-          ':' +
+          ":" +
           RNMessageParserSinglen.getChannelId() +
-          '\n' +
+          "\n" +
           RNRemoteMessage.NOTIFICATION.IMAGEURL +
-          ':' +
+          ":" +
           RNMessageParserSinglen.getImageUrl() +
-          '\n' +
+          "\n" +
           RNRemoteMessage.NOTIFICATION.LINK +
-          ':' +
+          ":" +
           RNMessageParserSinglen.getLink() +
-          '\n' +
+          "\n" +
           RNRemoteMessage.NOTIFICATION.NOTIFYID +
-          ':' +
+          ":" +
           RNMessageParserSinglen.getNotifyId() +
-          '\n' +
+          "\n" +
           RNRemoteMessage.NOTIFICATION.WHEN +
-          ':' +
+          ":" +
           RNMessageParserSinglen.getWhen() +
-          '\n' +
+          "\n" +
           RNRemoteMessage.NOTIFICATION.LIGHTSETTINGS +
-          ':' +
+          ":" +
           RNMessageParserSinglen.getLightSettings() +
-          '\n' +
+          "\n" +
           RNRemoteMessage.NOTIFICATION.BADGENUMBER +
-          ':' +
+          ":" +
           RNMessageParserSinglen.getBadgeNumber() +
-          '\n' +
+          "\n" +
           RNRemoteMessage.NOTIFICATION.IMPORTANCE +
-          ':' +
+          ":" +
           RNMessageParserSinglen.getImportance() +
-          '\n' +
+          "\n" +
           RNRemoteMessage.NOTIFICATION.TICKER +
-          ':' +
+          ":" +
           RNMessageParserSinglen.getTicker() +
-          '\n' +
+          "\n" +
           RNRemoteMessage.NOTIFICATION.VIBRATECONFIG +
-          ':' +
+          ":" +
           RNMessageParserSinglen.getVibrateConfig() +
-          '\n' +
+          "\n" +
           RNRemoteMessage.NOTIFICATION.VISIBILITY +
-          ':' +
+          ":" +
           RNMessageParserSinglen.getVisibility() +
-          '\n' +
+          "\n" +
           RNRemoteMessage.NOTIFICATION.INTENTURI +
-          ':' +
+          ":" +
           RNMessageParserSinglen.getIntentUri() +
-          '\n' +
+          "\n" +
           RNRemoteMessage.NOTIFICATION.ISAUTOCANCEL +
-          ':' +
+          ":" +
           RNMessageParserSinglen.isAutoCancel() +
-          '\n' +
+          "\n" +
           RNRemoteMessage.NOTIFICATION.ISLOCALONLY +
-          ':' +
+          ":" +
           RNMessageParserSinglen.isLocalOnly() +
-          '\n' +
+          "\n" +
           RNRemoteMessage.NOTIFICATION.ISDEFAULTLIGHT +
-          ':' +
+          ":" +
           RNMessageParserSinglen.isDefaultLight() +
-          '\n' +
+          "\n" +
           RNRemoteMessage.NOTIFICATION.ISDEFAULTSOUND +
-          ':' +
+          ":" +
           RNMessageParserSinglen.isDefaultSound() +
-          '\n' +
+          "\n" +
           RNRemoteMessage.NOTIFICATION.ISDEFAULTVIBRATE +
-          ':' +
+          ":" +
           RNMessageParserSinglen.isDefaultVibrate() +
-          '\n';
+          "\n";
         pushResult = pushResult + msg;
 
         pushResult =
           pushResult +
-          '----------------------------------------------------------------' +
-          '\n' +
-          'receive message content end' +
-          '\n' +
-          '----------------------------------------------------------------' +
-          '\n';
+          "----------------------------------------------------------------" +
+          "\n" +
+          "receive message content end" +
+          "\n" +
+          "----------------------------------------------------------------" +
+          "\n";
 
         this.setState({
           receiveContent: pushResult,
@@ -261,7 +263,7 @@ export default class Push extends Component {
       event => {
         pushResult =
           pushResult +
-          'received token:\n' +
+          "received token:\n" +
           this.getFixedNumCharacters(event.token);
 
         this.setState({
@@ -279,12 +281,12 @@ export default class Push extends Component {
 
   getFixedNumCharacters(content) {
     if (content == null) {
-      return 'null';
+      return "null";
     }
     const len = content.length;
-    let msg = '';
+    let msg = "";
     if (len < MaxNumbers) {
-      return content + '\n';
+      return content + "\n";
     } else {
       let index = 0;
       while (index * MaxNumbers < len) {
@@ -293,7 +295,7 @@ export default class Push extends Component {
         if (subLen > MaxNumbers) {
           subLen = MaxNumbers;
         }
-        msg = msg + content.substr(index * MaxNumbers, subLen) + '\n';
+        msg = msg + content.substr(index * MaxNumbers, subLen) + "\n";
         index = index + 1;
       }
     }
@@ -305,59 +307,59 @@ export default class Push extends Component {
   }
 
   turnOnPush() {
-    this.toast('turnOnPush');
+    this.toast("turnOnPush");
 
     const startTime = new Date().getTime();
     NativeModules.RNHmsMessaging.turnOnPush((result, errinfo) => {
       const spendTime = new Date().getTime() - startTime;
-      let msg = '[spend ' + spendTime + 'ms]';
+      let msg = "[spend " + spendTime + "ms]";
 
       if (result == RNErrorEnum.SUCCESS) {
-        msg = msg + 'turnOnPush success!' + '\n';
+        msg = msg + "turnOnPush success!" + "\n";
       } else {
-        msg = msg + 'turnOnPush failed:' + errinfo + '\n';
+        msg = msg + "turnOnPush failed:" + errinfo + "\n";
       }
       this.setShowMsgState(msg);
     });
   }
 
   turnOffPush() {
-    this.toast('turnOffPush');
+    this.toast("turnOffPush");
 
     const startTime = new Date().getTime();
     NativeModules.RNHmsMessaging.turnOffPush((result, errinfo) => {
       const spendTime = new Date().getTime() - startTime;
-      let msg = '[spend ' + spendTime + 'ms]';
+      let msg = "[spend " + spendTime + "ms]";
       if (result == RNErrorEnum.SUCCESS) {
-        msg = msg + 'turnOffPush success!' + '\n';
+        msg = msg + "turnOffPush success!" + "\n";
       } else {
-        msg = msg + 'turnOffPush failed:' + errinfo + '\n';
+        msg = msg + "turnOffPush failed:" + errinfo + "\n";
       }
       this.setShowMsgState(msg);
     });
   }
 
   clearLog() {
-    this.toast('clearLog');
+    this.toast("clearLog");
 
-    pushResult = '';
-    console.log('start clearLog');
+    pushResult = "";
+    console.log("start clearLog");
     this.setState({
       receiveContent: pushResult,
     });
   }
 
   getID() {
-    this.toast('getID');
+    this.toast("getID");
 
     const startTime = new Date().getTime();
     NativeModules.RNHmsInstanceId.getId((result, resultInfo) => {
       const spendTime = new Date().getTime() - startTime;
-      let msg = '[spend ' + spendTime + 'ms]';
+      let msg = "[spend " + spendTime + "ms]";
       if (result == RNErrorEnum.SUCCESS) {
-        msg = msg + 'getID success:' + resultInfo + '\n';
+        msg = msg + "getID success:" + resultInfo + "\n";
       } else {
-        msg = msg + 'getID failed:' + resultInfo + '\n';
+        msg = msg + "getID failed:" + resultInfo + "\n";
       }
 
       this.setShowMsgState(msg);
@@ -365,33 +367,33 @@ export default class Push extends Component {
   }
 
   getAAID() {
-    this.toast('getAAID');
+    this.toast("getAAID");
 
     const startTime = new Date().getTime();
     NativeModules.RNHmsInstanceId.getAAID((result, resultInfo) => {
       const spendTime = new Date().getTime() - startTime;
-      let msg = '[spend ' + spendTime + 'ms]';
+      let msg = "[spend " + spendTime + "ms]";
       if (result == RNErrorEnum.SUCCESS) {
-        msg = msg + 'getAAID success:' + resultInfo + '\n';
+        msg = msg + "getAAID success:" + resultInfo + "\n";
       } else {
-        msg = msg + 'getAAID failed:' + resultInfo + '\n';
+        msg = msg + "getAAID failed:" + resultInfo + "\n";
       }
       this.setShowMsgState(msg);
     });
   }
 
   getToken() {
-    this.toast('getToken');
+    this.toast("getToken");
 
     const startTime = new Date().getTime();
     NativeModules.RNHmsInstanceId.getToken((result, token) => {
       const spendTime = new Date().getTime() - startTime;
-      let msg = '[spend ' + spendTime + 'ms]';
+      let msg = "[spend " + spendTime + "ms]";
 
       if (result == RNErrorEnum.SUCCESS) {
-        msg = msg + 'getToken result:' + '\n';
+        msg = msg + "getToken result:" + "\n";
       } else {
-        msg = msg + 'getToken exception,error: ' + result + '\n';
+        msg = msg + "getToken exception,error: " + result + "\n";
       }
 
       msg = msg + this.getFixedNumCharacters(token);
@@ -401,48 +403,48 @@ export default class Push extends Component {
   }
 
   getCreationTime() {
-    this.toast('getCreationTime');
+    this.toast("getCreationTime");
 
     const startTime = new Date().getTime();
     NativeModules.RNHmsInstanceId.getCreationTime((result, resultInfo) => {
       const spendTime = new Date().getTime() - startTime;
-      let msg = '[spend ' + spendTime + 'ms]';
+      let msg = "[spend " + spendTime + "ms]";
       if (result == RNErrorEnum.SUCCESS) {
-        msg = msg + 'getCreationTime success:' + resultInfo + '\n';
+        msg = msg + "getCreationTime success:" + resultInfo + "\n";
       } else {
-        msg = msg + 'getCreationTime failed:' + resultInfo + '\n';
+        msg = msg + "getCreationTime failed:" + resultInfo + "\n";
       }
       this.setShowMsgState(msg);
     });
   }
 
   deleteAAID() {
-    this.toast('deleteAAID');
+    this.toast("deleteAAID");
 
     const startTime = new Date().getTime();
     NativeModules.RNHmsInstanceId.deleteAAID((result, resultInfo) => {
       const spendTime = new Date().getTime() - startTime;
-      let msg = '[spend12 ' + spendTime + 'ms]';
+      let msg = "[spend12 " + spendTime + "ms]";
       if (result == RNErrorEnum.SUCCESS) {
-        msg = msg + 'deleteAAID success!' + '\n';
+        msg = msg + "deleteAAID success!" + "\n";
       } else {
-        msg = msg + 'deleteAAID failed:' + resultInfo + '\n';
+        msg = msg + "deleteAAID failed:" + resultInfo + "\n";
       }
       this.setShowMsgState(msg);
     });
   }
 
   deleteToken() {
-    this.toast('deleteToken');
+    this.toast("deleteToken");
 
     const startTime = new Date().getTime();
     NativeModules.RNHmsInstanceId.deleteToken((result, resultInfo) => {
       const spendTime = new Date().getTime() - startTime;
-      let msg = '[spend ' + spendTime + 'ms]';
+      let msg = "[spend " + spendTime + "ms]";
       if (result == RNErrorEnum.SUCCESS) {
-        msg = msg + 'deleteToken success!' + '\n';
+        msg = msg + "deleteToken success!" + "\n";
       } else {
-        msg = msg + 'deleteToken failed:' + resultInfo + '\n';
+        msg = msg + "deleteToken failed:" + resultInfo + "\n";
       }
 
       this.setShowMsgState(msg);
@@ -450,19 +452,19 @@ export default class Push extends Component {
   }
 
   subscribe() {
-    this.toast('subscribe topic:' + this.state.topic);
+    this.toast("subscribe topic:" + this.state.topic);
 
     const startTime = new Date().getTime();
     NativeModules.RNHmsMessaging.subscribe(
       this.state.topic,
       (result, errinfo) => {
         const spendTime = new Date().getTime() - startTime;
-        let msg = '[spend ' + spendTime + 'ms]';
+        let msg = "[spend " + spendTime + "ms]";
 
         if (result == RNErrorEnum.SUCCESS) {
-          msg = msg + 'subscribe success!' + '\n';
+          msg = msg + "subscribe success!" + "\n";
         } else {
-          msg = msg + 'subscribe failed:' + errinfo + '\n';
+          msg = msg + "subscribe failed:" + errinfo + "\n";
         }
 
         this.setShowMsgState(msg);
@@ -471,19 +473,19 @@ export default class Push extends Component {
   }
 
   unsubscribe() {
-    this.toast('unsubscribe topic:' + this.state.topic);
+    this.toast("unsubscribe topic:" + this.state.topic);
 
     const startTime = new Date().getTime();
     NativeModules.RNHmsMessaging.unsubscribe(
       this.state.topic,
       (result, errinfo) => {
         const spendTime = new Date().getTime() - startTime;
-        let msg = '[spend ' + spendTime + 'ms]';
+        let msg = "[spend " + spendTime + "ms]";
 
         if (result == RNErrorEnum.SUCCESS) {
-          msg = msg + 'unsubscribe success!' + '\n';
+          msg = msg + "unsubscribe success!" + "\n";
         } else {
-          msg = msg + 'unsubscribe failed:' + errinfo + '\n';
+          msg = msg + "unsubscribe failed:" + errinfo + "\n";
         }
 
         this.setShowMsgState(msg);
@@ -492,7 +494,7 @@ export default class Push extends Component {
   }
 
   onChangeTopic(inputData) {
-    console.log('subscribe input:', inputData);
+    console.log("subscribe input:", inputData);
 
     this.setState({
       topic: inputData,
@@ -500,16 +502,16 @@ export default class Push extends Component {
   }
 
   isAutoInitEnabled() {
-    this.toast('isAutoInitEnabled');
+    this.toast("isAutoInitEnabled");
 
     const startTime = new Date().getTime();
     NativeModules.RNHmsMessaging.isAutoInitEnabled((result, resultInfo) => {
       const spendTime = new Date().getTime() - startTime;
-      let msg = '[spend ' + spendTime + 'ms]';
+      let msg = "[spend " + spendTime + "ms]";
       if (result == RNErrorEnum.SUCCESS) {
-        msg = msg + 'isAutoInitEnabled success:' + resultInfo + '\n';
+        msg = msg + "isAutoInitEnabled success:" + resultInfo + "\n";
       } else {
-        msg = msg + 'isAutoInitEnabled failed:' + resultInfo + '\n';
+        msg = msg + "isAutoInitEnabled failed:" + resultInfo + "\n";
       }
 
       this.setShowMsgState(msg);
@@ -526,159 +528,215 @@ export default class Push extends Component {
   render() {
     return (
       <ScrollView>
-        <Button
-          title="Open Custom intent URI Page"
-          style={styles.buttonText}
-          onPress={() => this.props.navigation.navigate('DataPage')}
-        />
-        <View style={styles.container10Top}>
-          <TouchableHighlight onPress={this.turnOffPush}>
-            <View style={styles.buttonLeft}>
-              <Text style={styles.buttonText}>TurnOffPush</Text>
-            </View>
-          </TouchableHighlight>
-          <TouchableOpacity onPress={this.turnOnPush}>
-            <View style={styles.buttonRight}>
-              <Text style={styles.buttonText}>TurnOnPush</Text>
-            </View>
-          </TouchableOpacity>
+        <View style={headerStyles.headerSection}>
+          <View style={headerStyles.headerTitleWrapper}>
+            <Text style={headerStyles.headerTitle}>HMS Push </Text>
+          </View>
+          <View style={headerStyles.headerLogoWrapper}>
+            <Image
+              style={headerStyles.headerLogo}
+              source={require("../../assets/images/hms-rn-logo.png")}
+            />
+          </View>
         </View>
 
-        <View style={styles.container10Top}>
-          <TouchableHighlight onPress={this.getID}>
-            <View style={styles.buttonLeft}>
-              <Text style={styles.buttonText}>Get ID</Text>
+        <View style={styles.body}>
+          <View style={styles.sectionContainer}>
+            <View style={styles.container10Top}>
+              <Text style={styles.sectionHeading}>Logs</Text>
+              <TouchableWithoutFeedback onPress={this.clearLog}>
+                <View style={styles.buttonRight}>
+                  <Text style={styles.buttonTextSmall}>ClearLog</Text>
+                </View>
+              </TouchableWithoutFeedback>
             </View>
-          </TouchableHighlight>
-          <TouchableHighlight onPress={this.getAAID}>
-            <View style={styles.buttonRight}>
-              <Text style={styles.buttonText}>Get AAID</Text>
-            </View>
-          </TouchableHighlight>
-        </View>
-        <View style={styles.containerSeamless}>
-          <TouchableHighlight onPress={this.getToken}>
-            <View style={styles.buttonLeft}>
-              <Text style={styles.buttonText}>Get Token</Text>
-            </View>
-          </TouchableHighlight>
-          <TouchableHighlight onPress={this.getCreationTime}>
-            <View style={styles.buttonRight}>
-              <Text style={styles.buttonText}>Get CreationTime</Text>
-            </View>
-          </TouchableHighlight>
-        </View>
-        <View style={styles.containerSeamless}>
-          <TouchableHighlight onPress={this.deleteAAID}>
-            <View style={styles.buttonLeft}>
-              <Text style={styles.buttonText}>Delete AAID</Text>
-            </View>
-          </TouchableHighlight>
-          <TouchableHighlight onPress={this.deleteToken}>
-            <View style={styles.buttonRight}>
-              <Text style={styles.buttonText}>Delete Token</Text>
-            </View>
-          </TouchableHighlight>
-        </View>
+            <ScrollView style={styles.containerShowResultMsg}>
+              {this.state.receiveContent == "" ? null : (
+                <Text>{this.state.receiveContent}</Text>
+              )}
+            </ScrollView>
+          </View>
 
-        <View style={styles.containerTopicInput}>
-          <TextInput
-            value={this.state.topic}
-            style={styles.inputTopic}
-            placeholder="topic"
-            onChangeText={this.onChangeTopic}
-          />
+          <View style={styles.sectionContainer}>
+            <Text style={styles.sectionHeading}>Custom Page</Text>
+            <View style={styles.container10Top}>
+              <TouchableHighlight
+                onPress={() => this.props.navigation.navigate("DataPage")}>
+                <View style={styles.buttonCenter}>
+                  <Text style={styles.buttonText}>
+                    Open Custom intent URI Page
+                  </Text>
+                </View>
+              </TouchableHighlight>
+            </View>
+          </View>
+
+          <View style={styles.sectionContainer}>
+            <Text style={styles.sectionHeading}>Push Setting</Text>
+
+            <View style={styles.container10Top}>
+              <TouchableHighlight onPress={this.turnOffPush}>
+                <View style={styles.buttonLeft}>
+                  <Text style={styles.buttonText}>TurnOffPush</Text>
+                </View>
+              </TouchableHighlight>
+              <TouchableOpacity onPress={this.turnOnPush}>
+                <View style={styles.buttonRight}>
+                  <Text style={styles.buttonText}>TurnOnPush</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.container10Top}>
+              <TouchableHighlight onPress={this.getID}>
+                <View style={styles.buttonLeft}>
+                  <Text style={styles.buttonText}>Get ID</Text>
+                </View>
+              </TouchableHighlight>
+              <TouchableHighlight onPress={this.getAAID}>
+                <View style={styles.buttonRight}>
+                  <Text style={styles.buttonText}>Get AAID</Text>
+                </View>
+              </TouchableHighlight>
+            </View>
+          </View>
+
+          <View style={styles.sectionContainer}>
+            <Text style={styles.sectionHeading}>Token Setting</Text>
+            <View style={styles.container10Top}>
+              <TouchableHighlight onPress={this.getToken}>
+                <View style={styles.buttonLeft}>
+                  <Text style={styles.buttonText}>Get Token</Text>
+                </View>
+              </TouchableHighlight>
+              <TouchableHighlight onPress={this.getCreationTime}>
+                <View style={styles.buttonRight}>
+                  <Text style={styles.buttonText}>Get CreationTime</Text>
+                </View>
+              </TouchableHighlight>
+            </View>
+            <View style={styles.container10Top}>
+              <TouchableHighlight onPress={this.deleteAAID}>
+                <View style={styles.buttonLeft}>
+                  <Text style={styles.buttonText}>Delete AAID</Text>
+                </View>
+              </TouchableHighlight>
+              <TouchableHighlight onPress={this.deleteToken}>
+                <View style={styles.buttonRight}>
+                  <Text style={styles.buttonText}>Delete Token</Text>
+                </View>
+              </TouchableHighlight>
+            </View>
+          </View>
+
+          <View style={styles.sectionContainer}>
+            <Text style={styles.sectionHeading}>Topic Subscribe</Text>
+            <View style={styles.container10Top}>
+              <TextInput
+                value={this.state.topic}
+                style={styles.inputTopic}
+                placeholder="Input Topic"
+                onChangeText={this.onChangeTopic}
+              />
+            </View>
+
+            <View style={styles.container10Top}>
+              <TouchableHighlight onPress={this.subscribe}>
+                <View style={styles.buttonLeft}>
+                  <Text style={styles.buttonText}>Subscribe</Text>
+                </View>
+              </TouchableHighlight>
+              <TouchableHighlight onPress={this.unsubscribe}>
+                <View style={styles.buttonRight}>
+                  <Text style={styles.buttonText}>UnSubscribe</Text>
+                </View>
+              </TouchableHighlight>
+            </View>
+
+            <View style={styles.container10Top}>
+              <TouchableHighlight
+                onPress={() => {
+                  const startTime = new Date().getTime();
+                  NativeModules.RNHmsMessaging.setAutoInitEnabled(
+                    this.state.disableAutoInit,
+                    (result, resultInfo) => {
+                      const spendTime = new Date().getTime() - startTime;
+                      let msg = "[spend " + spendTime + "ms]";
+                      if (result == RNErrorEnum.SUCCESS) {
+                        msg =
+                          msg +
+                          "setAutoInitEnabled success:" +
+                          resultInfo +
+                          "\n";
+                      } else {
+                        msg =
+                          msg +
+                          "setAutoInitEnabled failed:" +
+                          resultInfo +
+                          "\n";
+                      }
+
+                      pushResult = pushResult + msg;
+                      this.setState({
+                        receiveContent: pushResult,
+                      });
+                    },
+                  );
+                }}>
+                <View style={styles.buttonLeft}>
+                  <Text
+                    value={this.state.disableAutoInit}
+                    style={styles.buttonText}>
+                    Disable AutoInit
+                  </Text>
+                </View>
+              </TouchableHighlight>
+              <TouchableHighlight
+                onPress={() => {
+                  const startTime = new Date().getTime();
+                  NativeModules.RNHmsMessaging.setAutoInitEnabled(
+                    this.state.enableAutoInit,
+                    (result, resultInfo) => {
+                      const spendTime = new Date().getTime() - startTime;
+                      let msg = "[spend " + spendTime + "ms]";
+                      if (result == RNErrorEnum.SUCCESS) {
+                        msg =
+                          msg +
+                          "setAutoInitEnabled success:" +
+                          resultInfo +
+                          "\n";
+                      } else {
+                        msg =
+                          msg +
+                          "setAutoInitEnabled failed:" +
+                          resultInfo +
+                          "\n";
+                      }
+
+                      pushResult = pushResult + msg;
+                      this.setState({
+                        receiveContent: pushResult,
+                      });
+                    },
+                  );
+                }}>
+                <View
+                  value={this.state.enableAutoInit}
+                  style={styles.buttonRight}>
+                  <Text style={styles.buttonText}>Enable AutoInit</Text>
+                </View>
+              </TouchableHighlight>
+            </View>
+
+            <View style={styles.containerSeamless}>
+              <TouchableHighlight onPress={this.isAutoInitEnabled}>
+                <View style={styles.buttonLeft}>
+                  <Text style={styles.buttonText}>Is AutoInit Enabled</Text>
+                </View>
+              </TouchableHighlight>
+            </View>
+          </View>
         </View>
-
-        <View style={styles.containerSeamless}>
-          <TouchableHighlight onPress={this.subscribe}>
-            <View style={styles.buttonLeft}>
-              <Text style={styles.buttonText}>Subscribe</Text>
-            </View>
-          </TouchableHighlight>
-          <TouchableHighlight onPress={this.unsubscribe}>
-            <View style={styles.buttonRight}>
-              <Text style={styles.buttonText}>UnSubscribe</Text>
-            </View>
-          </TouchableHighlight>
-        </View>
-
-        <View style={styles.container10Top}>
-          <TouchableHighlight
-            onPress={() => {
-              const startTime = new Date().getTime();
-              NativeModules.RNHmsMessaging.setAutoInitEnabled(
-                this.state.disableAutoInit,
-                (result, resultInfo) => {
-                  const spendTime = new Date().getTime() - startTime;
-                  let msg = '[spend ' + spendTime + 'ms]';
-                  if (result == RNErrorEnum.SUCCESS) {
-                    msg =
-                      msg + 'setAutoInitEnabled success:' + resultInfo + '\n';
-                  } else {
-                    msg =
-                      msg + 'setAutoInitEnabled failed:' + resultInfo + '\n';
-                  }
-
-                  pushResult = pushResult + msg;
-                  this.setState({
-                    receiveContent: pushResult,
-                  });
-                },
-              );
-            }}>
-            <View style={styles.buttonLeft}>
-              <Text
-                value={this.state.disableAutoInit}
-                style={styles.buttonText}>
-                Disable AutoInit
-              </Text>
-            </View>
-          </TouchableHighlight>
-          <TouchableHighlight
-            onPress={() => {
-              const startTime = new Date().getTime();
-              NativeModules.RNHmsMessaging.setAutoInitEnabled(
-                this.state.enableAutoInit,
-                (result, resultInfo) => {
-                  const spendTime = new Date().getTime() - startTime;
-                  let msg = '[spend ' + spendTime + 'ms]';
-                  if (result == RNErrorEnum.SUCCESS) {
-                    msg =
-                      msg + 'setAutoInitEnabled success:' + resultInfo + '\n';
-                  } else {
-                    msg =
-                      msg + 'setAutoInitEnabled failed:' + resultInfo + '\n';
-                  }
-
-                  pushResult = pushResult + msg;
-                  this.setState({
-                    receiveContent: pushResult,
-                  });
-                },
-              );
-            }}>
-            <View value={this.state.enableAutoInit} style={styles.buttonRight}>
-              <Text style={styles.buttonText}>Enable AutoInit</Text>
-            </View>
-          </TouchableHighlight>
-        </View>
-        <View style={styles.containerSeamless}>
-          <TouchableHighlight onPress={this.isAutoInitEnabled}>
-            <View style={styles.buttonLeft}>
-              <Text style={styles.buttonText}>Is AutoInit Enabled</Text>
-            </View>
-          </TouchableHighlight>
-          <TouchableWithoutFeedback onPress={this.clearLog}>
-            <View style={styles.buttonRight}>
-              <Text style={styles.buttonText}>ClearLog</Text>
-            </View>
-          </TouchableWithoutFeedback>
-        </View>
-
-        <ScrollView style={styles.containerShowResultMsg}>
-          <Text>{this.state.receiveContent}</Text>
-        </ScrollView>
       </ScrollView>
     );
   }

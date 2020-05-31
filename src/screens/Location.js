@@ -10,19 +10,21 @@ import {
   TextInput,
 } from 'react-native';
 
+import {headerStyles} from '../styles/headerStyles';
+
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 import HMSLocation from 'react-native-hms-location';
 
 const Header = () => (
   <>
-    <View style={styles.header}>
-      <View style={styles.headerTitleWrapper}>
-        <Text style={styles.headerTitle}>HMS Location Kit</Text>
+    <View style={headerStyles.headerSection}>
+      <View style={headerStyles.headerTitleWrapper}>
+        <Text style={headerStyles.headerTitle}>HMS Location Kit</Text>
       </View>
-      <View style={styles.headerLogoWrapper}>
+      <View style={headerStyles.headerLogoWrapper}>
         <Image
-          style={styles.headerLogo}
+          style={headerStyles.headerLogo}
           source={require('../../assets/images/hms-rn-logo.png')}
         />
       </View>
@@ -193,7 +195,7 @@ const MockLocation = () => {
             onChangeText={setLat}
           />
         </View>
-        <View style={styles.centralizeContent}>
+        <View style={styles.spaceAroundContent}>
           <Button title="Set" onPress={setMockLocation} />
           <Button title="Enable" onPress={enableMockLocation} />
           <Button title="Disable" onPress={disableMockLocation} />
@@ -543,7 +545,7 @@ const Geofence = () => {
         <View style={styles.spaceBetweenRow}>
           <Text style={styles.sectionTitle}>Geofence</Text>
         </View>
-        <View style={styles.centralizeContent}>
+        <View style={styles.spaceAroundContent}>
           <Button
             title={reqCode ? 'Remove Geofence' : 'Create Geofence'}
             onPress={() => {
@@ -674,7 +676,7 @@ const ActivityIdentification = () => {
         <View style={styles.spaceBetweenRow}>
           <Text style={styles.sectionTitle}>Activity Identification</Text>
         </View>
-        <View style={styles.centralizeContent}>
+        <View style={styles.spaceAroundContent}>
           <Button
             title={idReqCode ? 'Remove Identification' : 'Get Identification'}
             onPress={() => {
@@ -852,7 +854,7 @@ const ActivityConversion = () => {
         <View style={styles.spaceBetweenRow}>
           <Text style={styles.sectionTitle}>Conversion Update</Text>
         </View>
-        <View style={styles.centralizeContent}>
+        <View style={styles.spaceAroundContent}>
           <Button
             title={convReqCode ? 'Remove Update' : 'Create Update'}
             onPress={() => {
@@ -935,13 +937,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
   },
   sectionTitle: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: '600',
     color: Colors.black,
   },
   sectionDescription: {
     marginTop: 8,
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '400',
     color: Colors.dark,
   },
@@ -963,21 +965,7 @@ const styles = StyleSheet.create({
     paddingRight: 12,
     textAlign: 'right',
   },
-  header: {
-    height: 180,
-    width: '100%',
-  },
-  headerTitleWrapper: {
-    position: 'absolute',
-    justifyContent: 'center',
-    top: 0,
-    bottom: 0,
-    right: 0,
-    left: 20,
-  },
-  headerTitle: {fontSize: 17, fontWeight: '700', color: '#5FD8FF'},
-  headerLogoWrapper: {alignItems: 'flex-end', justifyContent: 'center'},
-  headerLogo: {height: 160, width: 160},
+
   spaceBetweenRow: {flexDirection: 'row', justifyContent: 'space-between'},
   divider: {
     width: '90%',
@@ -989,6 +977,7 @@ const styles = StyleSheet.create({
   boldText: {fontWeight: 'bold'},
   centralizeSelf: {alignSelf: 'center'},
   centralizeContent: {flexDirection: 'row', justifyContent: 'center'},
+  spaceAroundContent: {flexDirection: 'row', justifyContent: 'space-around'},
 });
 
 export default LocationPage;

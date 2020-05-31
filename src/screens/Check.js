@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect} from "react";
 
 import {
   SafeAreaView,
@@ -6,10 +6,13 @@ import {
   ScrollView,
   View,
   Text,
+  Image,
   NativeModules,
-} from 'react-native';
+} from "react-native";
 
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {Colors} from "react-native/Libraries/NewAppScreen";
+
+import {headerStyles} from "../styles/headerStyles";
 
 const Check = () => {
   const [isHMSAvailable, setIsHMSAvailable] = useState(false);
@@ -23,44 +26,68 @@ const Check = () => {
     setIsGMSAvailable(status);
   });
 
-  return (
-    <SafeAreaView style={styles.safeAreaStyle}>
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={styles.scrollView}>
-        <View style={styles.rowStyle}>
-          <Text>GMS</Text>
-          <Text>{isGMSAvailable === true ? 'Available' : 'Not Available'}</Text>
+  const Header = () => (
+    <>
+      <View style={headerStyles.headerSection}>
+        <View style={headerStyles.headerTitleWrapper}>
+          <Text style={headerStyles.headerTitle}>HMS / GMS Availability</Text>
         </View>
+        <View style={headerStyles.headerLogoWrapper}>
+          <Image
+            style={headerStyles.headerLogo}
+            source={require("../../assets/images/hms-rn-logo.png")}
+          />
+        </View>
+      </View>
+    </>
+  );
 
-        <View style={styles.rowStyle}>
-          <Text>HMS</Text>
-          <Text>{isHMSAvailable === true ? 'Available' : 'Not Available'}</Text>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+  return (
+    <>
+      <SafeAreaView>
+        <ScrollView
+          contentInsetAdjustmentBehavior="automatic"
+          style={styles.scrollView}>
+          <Header />
+          <View style={styles.body}>
+            <View style={styles.rowStyle}>
+              <Text>GMS</Text>
+              <Text>
+                {isGMSAvailable === true ? "Available" : "Not Available"}
+              </Text>
+            </View>
+
+            <View style={styles.rowStyle}>
+              <Text>HMS</Text>
+              <Text>
+                {isHMSAvailable === true ? "Available" : "Not Available"}
+              </Text>
+            </View>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
-  safeAreaStyle: {
-    flex: 1,
-    backgroundColor: Colors.lighter,
-    marginHorizontal: 30,
-  },
   scrollView: {
     backgroundColor: Colors.lighter,
   },
+  body: {
+    backgroundColor: Colors.white,
+    padding: 30,
+  },
   TextStyle: {
     fontSize: 24,
-    fontWeight: '400',
+    fontWeight: "400",
     color: Colors.dark,
-    textAlign: 'center',
+    textAlign: "center",
   },
   rowStyle: {
     marginTop: 16,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
 });
 
