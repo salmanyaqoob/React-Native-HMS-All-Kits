@@ -24,19 +24,17 @@ const Home = ({navigation}) => {
   };
 
   const Header = () => (
-    <>
-      <View style={headerStyles.headerSection}>
-        <View style={headerStyles.headerTitleWrapper}>
-          <Text style={headerStyles.headerTitle}>React Native HMS Kits</Text>
-        </View>
-        <View style={headerStyles.headerLogoWrapper}>
-          <Image
-            style={headerStyles.headerLogo}
-            source={require("../../assets/images/hms-rn-logo.png")}
-          />
-        </View>
+    <View style={headerStyles.headerSection}>
+      <View style={headerStyles.headerTitleWrapper}>
+        <Text style={headerStyles.headerTitle}>React Native HMS Kits</Text>
       </View>
-    </>
+      <View style={headerStyles.headerLogoWrapper}>
+        <Image
+          style={headerStyles.headerLogo}
+          source={require("../../assets/images/hms-rn-logo.png")}
+        />
+      </View>
+    </View>
   );
 
   return (

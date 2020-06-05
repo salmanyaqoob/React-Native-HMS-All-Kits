@@ -33,16 +33,16 @@
     "react": "16.11.0",
     "react-native": "0.62.2",
     "react-native-gesture-handler": "^1.6.1",
+    "react-native-ha-interface": "./hms-packages/react-native-ha-interface",
+    "react-native-hms-location": "./hms-packages/react-native-hms-location",
+    "react-native-hms-map": "./hms-packages/react-native-hms-map",
+    "react-native-hwpush": "./hms-packages/react-native-hwpush",
     "react-native-reanimated": "^1.9.0",
     "react-native-safe-area-context": "^2.0.3",
     "react-native-safe-area-view": "^1.1.1",
     "react-native-screens": "^2.8.0",
     "react-navigation": "^4.3.9",
-    "react-navigation-stack": "^2.5.1",
-    "react-native-hms-location": "./hms-packages/react-native-hms-location",
-    "react-native-hms-map": "./hms-packages/react-native-hms-map",
-    "react-native-hwpush": "./hms-packages/react-native-hwpush",
-    "react-native-ha-interface": "./hms-packages/react-native-ha-interface"
+    "react-navigation-stack": "^2.5.1"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",

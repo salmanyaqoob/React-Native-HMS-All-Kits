@@ -148,8 +148,14 @@ public class RNFusedLocationModule extends ReactContextBaseJavaModule implements
         fusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
-                Log.i(TAG, "getLastLocation::onSuccess -> " + location.toString());
-                promise.resolve(LocationUtils.fromLocationToWritableMap(location));
+                if(location != null){
+                    Log.i(TAG, "getLastLocation::onSuccess -> " + location.toString());
+                    promise.resolve(LocationUtils.fromLocationToWritableMap(location));
+                } else {
+                    Log.e(TAG, "getLastLocation::onSuccess -> cache is null");
+                    promise.reject("last location cache is null");
+                }
+                
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
