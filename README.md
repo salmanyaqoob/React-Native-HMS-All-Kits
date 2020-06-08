@@ -11,6 +11,10 @@ React Native HMS packages integrated in this project:
 5.  **Huawei Analytics Kit.**
 6.  **Huawei Account Kit.**
 
+## Dowload APK
+
+For testing of React Native project, please [donwload](https://github.com/salmanyaqoob/React-Native-HMS-All-Kits/raw/master/apks/rn-all-hms-kits-release.apk) the apk file.
+
 ## Screenshots
 
 ### Application
