@@ -1,5 +1,7 @@
 # React Native All HMS Kits
 
+![enter image description here](./assets/title.jpeg)
+
 In this repository we try to combine all **HMS React Native Kits** in one Project!
 
 React Native HMS packages integrated in this project:
@@ -30,6 +32,29 @@ For testing of React Native project, please [donwload](https://github.com/salman
 ![enter image description here](./screenshots/5.jpg)
 ![enter image description here](./screenshots/6.jpg)
 ![enter image description here](./screenshots/7.jpg)
+
+## How to build a React Native Android Library
+
+Please read this [article](https://medium.com/@mitchclay0/how-to-build-a-react-native-android-library-5c1eb22d17e1) to have idea about how to make your own customize React Native Android Library.
+
+## Install plugins to Project
+
+    yarn add ./hms-packages/react-native-ha-interface
+    yarn add ./hms-packages/react-native-hms-location
+    yarn add ./hms-packages/react-native-hms-map
+    yarn add ./hms-packages/react-native-hwpush
+
+## Remove plugins to Project
+
+    yarn remove react-native-ha-interface
+    yarn remove react-native-hms-location
+    yarn remove react-native-hms-map
+    yarn remove react-native-hwpush
+
+## Enabling/Disabling the Debug Mode for Analytics
+
+    adb shell setprop debug.huawei.hms.analytics.app <YOUR-PACKAGE-NAME>
+    shell setprop debug.huawei.hms.analytics.app .none.
 
 ## Official HMS Resources
 
