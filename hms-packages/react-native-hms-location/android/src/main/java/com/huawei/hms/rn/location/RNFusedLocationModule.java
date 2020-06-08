@@ -22,6 +22,7 @@ import java.util.Map;
 import android.util.Log;
 import android.os.Looper;
 import android.location.Location;
+import android.content.IntentSender;
 
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -39,7 +40,10 @@ import com.huawei.hms.location.LocationCallback;
 import com.huawei.hms.location.LocationRequest;
 import com.huawei.hms.location.LocationServices;
 import com.huawei.hms.location.LocationSettingsResponse;
+import com.huawei.hms.location.LocationSettingsStatusCodes;
 import com.huawei.hms.location.SettingsClient;
+import com.huawei.hms.common.ApiException;
+import com.huawei.hms.common.ResolvableApiException;
 
 import com.huawei.hms.rn.location.helpers.Exceptions;
 import com.huawei.hms.rn.location.helpers.ResultHandler;
@@ -132,6 +136,21 @@ public class RNFusedLocationModule extends ReactContextBaseJavaModule implements
                     @Override
                     public void onFailure(Exception e) {
                         Log.e(TAG, "checkLocationSettings::onFailure -> " + e.getMessage());
+
+                    int statusCode = ((ApiException) e).getStatusCode();
+                    switch (statusCode) {
+                        case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                            try {
+                                ResolvableApiException rae = (ResolvableApiException) e;
+                                
+                                rae.startResolutionForResult(getCurrentActivity(), 0);
+                            } catch (IntentSender.SendIntentException sie) {
+                                Log.d(TAG, sie.getMessage());
+                            }
+                            break;
+                    }
+
+
                         promise.reject(e);
                     }
                 });
