@@ -60,63 +60,14 @@ const LocationTestPage = () => {
       }
 
       if (hasLocationPermission === true && locationSettings === false) {
-        const locationRequest = HMSLocation.FusedLocation.Request.configure({
-          id: "e0048e" + Math.random() * 10000,
-          priority:
-            HMSLocation.FusedLocation.PriorityConstants.PRIORITY_HIGH_ACCURACY,
-          interval: 3,
-          numUpdates: 10,
-          fastestInterval: 1000.0,
-          expirationTime: 200000.0,
-          expirationTimeDuration: 200000.0,
-          smallestDisplacement: 0.0,
-          maxWaitTime: 2000000.0,
-          needAddress: true,
-          language: "en",
-          countryCode: "en",
-        }).build();
-
-        const locationSettingsRequest = HMSLocation.FusedLocation.SettingsRequest.configure(
-          {
-            locationRequests: [locationRequest],
-            alwaysShow: false,
-            needBle: false,
-          },
-        ).build();
-
-        HMSLocation.FusedLocation.Native.checkLocationSettings(
-          locationSettingsRequest,
-        )
-          .then(res => {
-            console.log("locationSettings", res);
-            console.log("locationSettings", typeof locationSettings);
-            if (res == "check_setting_again") {
-              setLocationSettings(false);
-              setHasLocationPermission(false);
-            } else if (typeof res === "object") {
-              setLocationSettings(res);
-            }
-          })
-          .catch(ex =>
-            console.log("Error while getting location settings. " + ex),
-          );
+        checkLocationSettings();
       }
 
       if (
         hasLocationPermission === true &&
         typeof locationSettings === "object"
       ) {
-        HMSLocation.FusedLocation.Native.getLocationAvailability()
-          .then(available => {
-            console.log("available", typeof available);
-            console.log("available", available);
-            let hasavailable = available === "true";
-            setLocationAvailable(hasavailable);
-          })
-          .catch(err => {
-            setLocationAvailable(false);
-            console.log("Failed to get location availability", err);
-          });
+        getLocationAvailability();
       }
 
       if (
@@ -125,17 +76,7 @@ const LocationTestPage = () => {
         typeof locationCoordinates === "undefined" &&
         lastknowCheck === true
       ) {
-        HMSLocation.FusedLocation.Native.getLastLocation()
-          .then(pos => {
-            console.log(pos);
-            setLocationCoordinates(pos);
-            setLastknowCheck(true);
-            setLoadingLocation(false);
-          })
-          .catch(err => {
-            setLastknowCheck(false);
-            console.log("Failed to get last location", err);
-          });
+        getLastLocation();
       }
 
       if (
@@ -166,6 +107,7 @@ const LocationTestPage = () => {
     locationUpdateId,
   ]);
 
+  // Request Location Permission
   const requestLocationPermisson = useCallback(() => {
     HMSLocation.FusedLocation.Native.requestPermission()
       .then(res => {
@@ -178,6 +120,7 @@ const LocationTestPage = () => {
       });
   }, []);
 
+  // Check Location Settings
   const checkLocationSettings = useCallback(() => {
     const locationRequest = HMSLocation.FusedLocation.Request.configure({
       id: "e0048e" + Math.random() * 10000,
@@ -208,14 +151,48 @@ const LocationTestPage = () => {
     )
       .then(res => {
         console.log("locationSettings", res);
-        setLocationSettings(res);
+        console.log("locationSettings", typeof locationSettings);
+        if (res == "check_setting_again") {
+          setLocationSettings(false);
+          setHasLocationPermission(false);
+        } else if (typeof res === "object") {
+          setLocationSettings(res);
+        }
       })
-      .catch(ex => {
-        // setLocationSettings(false);
-        console.log("Error while getting location settings. " + ex);
-      });
+      .catch(ex => console.log("Error while getting location settings. " + ex));
   });
 
+  // Get Location Availability
+  const getLocationAvailability = useCallback(() => {
+    HMSLocation.FusedLocation.Native.getLocationAvailability()
+      .then(available => {
+        console.log("available", typeof available);
+        console.log("available", available);
+        let hasavailable = available === "true";
+        setLocationAvailable(hasavailable);
+      })
+      .catch(err => {
+        setLocationAvailable(false);
+        console.log("Failed to get location availability", err);
+      });
+  }, []);
+
+  // Get Last Location
+  const getLastLocation = useCallback(() => {
+    HMSLocation.FusedLocation.Native.getLastLocation()
+      .then(pos => {
+        console.log(pos);
+        setLocationCoordinates(pos);
+        setLastknowCheck(true);
+        setLoadingLocation(false);
+      })
+      .catch(err => {
+        setLastknowCheck(false);
+        console.log("Failed to get last location", err);
+      });
+  }, []);
+
+  // Request Location Update
   const requestLocationUpdate = useCallback(() => {
     const LocationRequest = HMSLocation.FusedLocation.Request.configure({
       id: "e0048e" + Math.random() * 10000,
