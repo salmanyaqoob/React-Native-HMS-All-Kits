@@ -25,9 +25,11 @@ For testing of React Native project, please [donwload](https://github.com/salman
 
 ### Screenshots
 
-<img src="./screenshots/1.jpg" width="200"><img src="./screenshots/2.jpg" width="200"><img src="./screenshots/3.jpg" width="200">
-<img src="./screenshots/4.jpg" width="200"><img src="./screenshots/5.jpg" width="200"><img src="./screenshots/6.jpg" width="200">
-<img src="./screenshots/7.jpg" width="200"><img src="./screenshots/location-work-flow.gif" width="200">
+<img src="./screenshots/1.jpg" width="200"> <img src="./screenshots/2.jpg" width="200"> <img src="./screenshots/3.jpg" width="200">
+
+<img src="./screenshots/4.jpg" width="200"> <img src="./screenshots/5.jpg" width="200"> <img src="./screenshots/6.jpg" width="200">
+
+<img src="./screenshots/7.jpg" width="200"> <img src="./screenshots/location-work-flow.gif" width="200">
 
 ## How to build a React Native Android Library
 
