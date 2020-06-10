@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useEffect} from 'react';
+import React, {useState, useCallback, useEffect} from "react";
 import {
   SafeAreaView,
   StyleSheet,
@@ -8,13 +8,13 @@ import {
   Image,
   Button,
   TextInput,
-} from 'react-native';
+} from "react-native";
 
-import {headerStyles} from '../styles/headerStyles';
+import {headerStyles} from "../styles/headerStyles";
 
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {Colors} from "react-native/Libraries/NewAppScreen";
 
-import HMSLocation from 'react-native-hms-location';
+import HMSLocation from "react-native-hms-location";
 
 const Header = () => (
   <>
@@ -25,7 +25,7 @@ const Header = () => (
       <View style={headerStyles.headerLogoWrapper}>
         <Image
           style={headerStyles.headerLogo}
-          source={require('../../assets/images/hms-rn-logo.png')}
+          source={require("../../assets/images/hms-rn-logo.png")}
         />
       </View>
     </View>
@@ -40,12 +40,12 @@ const Permissions = () => {
   ] = useState(false);
 
   useEffect(() => {
-    console.log('useEffect');
+    console.log("useEffect");
     // Check location permissions
     HMSLocation.FusedLocation.Native.hasPermission()
       .then(result => setHasLocationPermission(result))
       .catch(ex =>
-        console.log('Error while getting location permission info: ' + ex),
+        console.log("Error while getting location permission info: " + ex),
       );
 
     // Check ActivityIdentification permissions
@@ -53,7 +53,7 @@ const Permissions = () => {
       .then(result => setHasActivityIdentificationPermission(result))
       .catch(ex =>
         console.log(
-          'Error while getting activity identification permission info: ' + ex,
+          "Error while getting activity identification permission info: " + ex,
         ),
       );
   });
@@ -66,12 +66,12 @@ const Permissions = () => {
     HMSLocation.ActivityIdentification.Native.requestPermission();
   }, []);
   const hasLocationPermissionText = hasLocationPermission
-    ? 'Location permissions are granted.'
-    : 'Location permissions are not granted.';
+    ? "Location permissions are granted."
+    : "Location permissions are not granted.";
 
   const hasActivityIdentificationPermissionText = hasActivityIdentificationPermission
-    ? 'ActivityIdentification permissions are granted.'
-    : 'ActivityIdentification permissions are not granted.';
+    ? "ActivityIdentification permissions are granted."
+    : "ActivityIdentification permissions are not granted.";
   return (
     <>
       <View style={styles.sectionContainer}>
@@ -117,12 +117,12 @@ const LocationAvailability = () => {
   const getLocationAvailability = useCallback(() => {
     HMSLocation.FusedLocation.Native.getLocationAvailability()
       .then(x => setLocationAvailable(x))
-      .catch(err => console.log('Failed to get location availability', err));
+      .catch(err => console.log("Failed to get location availability", err));
   }, []);
 
   const locationAvailableText = locationAvailable
-    ? 'Location is available.'
-    : 'Location is not available.';
+    ? "Location is available."
+    : "Location is not available.";
 
   return (
     <>
@@ -140,25 +140,25 @@ const LocationAvailability = () => {
 };
 
 const MockLocation = () => {
-  const [lat, setLat] = useState('41.3');
-  const [long, setLong] = useState('29.1');
+  const [lat, setLat] = useState("41.3");
+  const [long, setLong] = useState("29.1");
 
   const enableMockLocation = () => {
     HMSLocation.FusedLocation.Native.setMockMode(true)
-      .then(res => console.log('Mock mode ', res))
+      .then(res => console.log("Mock mode ", res))
       .catch(err => console.log(err));
   };
 
   const disableMockLocation = () => {
     HMSLocation.FusedLocation.Native.setMockMode(false)
-      .then(res => console.log('Mock mode ', res))
+      .then(res => console.log("Mock mode ", res))
       .catch(err => console.log(err));
   };
 
   const setMockLocation = () => {
     HMSLocation.FusedLocation.Native.setMockMode(true)
       .then(res => {
-        console.log('Mock mode ', res);
+        console.log("Mock mode ", res);
       })
       .catch(err => {
         console.log(err);
@@ -169,7 +169,7 @@ const MockLocation = () => {
       longitude: parseFloat(long),
     })
       .then(res => {
-        console.log('MOCK SET', res);
+        console.log("MOCK SET", res);
       })
       .catch(err => {
         console.log(err);
@@ -210,7 +210,7 @@ const LocationSettings = () => {
 
   const checkLocationSettings = useCallback(() => {
     const locationRequest = HMSLocation.FusedLocation.Request.configure({
-      id: 'e0048e' + Math.random() * 10000,
+      id: "e0048e" + Math.random() * 10000,
       priority:
         HMSLocation.FusedLocation.PriorityConstants.PRIORITY_HIGH_ACCURACY,
       interval: 3,
@@ -221,8 +221,8 @@ const LocationSettings = () => {
       smallestDisplacement: 0.0,
       maxWaitTime: 2000000.0,
       needAddress: true,
-      language: 'en',
-      countryCode: 'en',
+      language: "en",
+      countryCode: "en",
     }).build();
 
     const locationSettingsRequest = HMSLocation.FusedLocation.SettingsRequest.configure(
@@ -237,7 +237,7 @@ const LocationSettings = () => {
       locationSettingsRequest,
     )
       .then(res => setLocationSettings(res))
-      .catch(ex => console.log('Error while getting location settings. ' + ex));
+      .catch(ex => console.log("Error while getting location settings. " + ex));
   });
 
   return (
@@ -249,34 +249,34 @@ const LocationSettings = () => {
         </View>
         <View style={styles.spaceBetweenRow}>
           <Text style={styles.sectionDescription}>
-            <Text style={styles.boldText}>BLE Present</Text>:{' '}
-            {`${locationSettings?.isBlePresent || ''}`} |{' '}
-            <Text style={styles.boldText}>BLE Usable</Text>:{' '}
-            {`${locationSettings?.isBleUsable || ''}`}
+            <Text style={styles.boldText}>BLE Present</Text>:{" "}
+            {`${locationSettings?.isBlePresent || ""}`} |{" "}
+            <Text style={styles.boldText}>BLE Usable</Text>:{" "}
+            {`${locationSettings?.isBleUsable || ""}`}
           </Text>
         </View>
         <View style={styles.spaceBetweenRow}>
           <Text style={styles.sectionDescription}>
-            <Text style={styles.boldText}>GPS Present</Text>:{' '}
-            {`${locationSettings?.isGpsPresent || ''}`} |{' '}
-            <Text style={styles.boldText}>GPS Usable</Text>:{' '}
-            {`${locationSettings?.isGpsUsable || ''}`}
+            <Text style={styles.boldText}>GPS Present</Text>:{" "}
+            {`${locationSettings?.isGpsPresent || ""}`} |{" "}
+            <Text style={styles.boldText}>GPS Usable</Text>:{" "}
+            {`${locationSettings?.isGpsUsable || ""}`}
           </Text>
         </View>
         <View style={styles.spaceBetweenRow}>
           <Text style={styles.sectionDescription}>
-            <Text style={styles.boldText}>Location Present</Text>:{' '}
-            {`${locationSettings?.isLocationPresent || ''}`} |{' '}
-            <Text style={styles.boldText}>Location Usable</Text>:{' '}
-            {`${locationSettings?.isLocationUsable || ''}`}
+            <Text style={styles.boldText}>Location Present</Text>:{" "}
+            {`${locationSettings?.isLocationPresent || ""}`} |{" "}
+            <Text style={styles.boldText}>Location Usable</Text>:{" "}
+            {`${locationSettings?.isLocationUsable || ""}`}
           </Text>
         </View>
         <View style={styles.spaceBetweenRow}>
           <Text style={styles.sectionDescription}>
-            <Text style={styles.boldText}>Network Location Present</Text>:{' '}
-            {`${locationSettings?.isNetworkLocationPresent || ''}`} |{' '}
-            <Text style={styles.boldText}>Network Location Usable</Text>:{' '}
-            {`${locationSettings?.isNetworkLocationUsable || ''}`}
+            <Text style={styles.boldText}>Network Location Present</Text>:{" "}
+            {`${locationSettings?.isNetworkLocationPresent || ""}`} |{" "}
+            <Text style={styles.boldText}>Network Location Usable</Text>:{" "}
+            {`${locationSettings?.isNetworkLocationUsable || ""}`}
           </Text>
         </View>
       </View>
@@ -292,12 +292,12 @@ const LocationInfo = () => {
   const getLocation = useCallback(() => {
     HMSLocation.FusedLocation.Native.getLastLocation()
       .then(pos => setPosition(pos))
-      .catch(err => console.log('Failed to get last location', err));
+      .catch(err => console.log("Failed to get last location", err));
   }, []);
 
   const requestLocationUpdate = useCallback(() => {
     const LocationRequest = HMSLocation.FusedLocation.Request.configure({
-      id: 'e0048e' + Math.random() * 10000,
+      id: "e0048e" + Math.random() * 10000,
       priority:
         HMSLocation.FusedLocation.PriorityConstants.PRIORITY_HIGH_ACCURACY,
       interval: 3,
@@ -308,8 +308,8 @@ const LocationInfo = () => {
       smallestDisplacement: 0.0,
       maxWaitTime: 2000000.0,
       needAddress: true,
-      language: 'en',
-      countryCode: 'en',
+      language: "en",
+      countryCode: "en",
     }).build();
 
     HMSLocation.FusedLocation.Native.requestLocationUpdatesWithCallback(
@@ -317,14 +317,14 @@ const LocationInfo = () => {
     )
       .then(({id}) => setLocationUpdateId(id))
       .catch(ex =>
-        console.log('Exception while requestLocationUpdatesWithCallback ' + ex),
+        console.log("Exception while requestLocationUpdatesWithCallback " + ex),
       );
 
     // FIXME:
     HMSLocation.FusedLocation.Native.getLastLocationWithAddress(
       LocationRequest,
     ).then(res => {
-      console.log('Adrress: ', res);
+      console.log("Adrress: ", res);
     });
   }, []);
 
@@ -358,20 +358,20 @@ const LocationInfo = () => {
         </View>
         <View style={styles.spaceBetweenRow}>
           <Text style={styles.sectionDescription}>
-            <Text style={styles.boldText}>LAT</Text>: {position?.latitude || 0}{' '}
-            | <Text style={styles.boldText}>LONG</Text>:{' '}
+            <Text style={styles.boldText}>LAT</Text>: {position?.latitude || 0}{" "}
+            | <Text style={styles.boldText}>LONG</Text>:{" "}
             {position?.longitude || 0}
           </Text>
         </View>
         <View style={styles.spaceBetweenRow}>
           <Text style={styles.sectionDescription}>
-            <Text style={styles.boldText}>VERTICAL ACCURACY</Text>:{' '}
+            <Text style={styles.boldText}>VERTICAL ACCURACY</Text>:{" "}
             {position?.verticalAccuracyMeters || 0}
           </Text>
         </View>
         <View style={styles.spaceBetweenRow}>
           <Text style={styles.sectionDescription}>
-            <Text style={styles.boldText}>ACCURACY</Text>:{' '}
+            <Text style={styles.boldText}>ACCURACY</Text>:{" "}
             {position?.accuracy || 0}
           </Text>
         </View>
@@ -388,7 +388,7 @@ const LocationInfo = () => {
         <View style={styles.centralizeContent}>
           <Button
             title={
-              autoUpdateEnabled ? 'Disable auto-update' : 'Enable auto-update'
+              autoUpdateEnabled ? "Disable auto-update" : "Enable auto-update"
             }
             onPress={() => {
               if (autoUpdateEnabled) {
@@ -413,7 +413,7 @@ const Geofence = () => {
     longitude: 42.0,
     latitude: 29.0,
     radius: 20.0,
-    uniqueId: 'e00322',
+    uniqueId: "e00322",
     conversions: 1,
     validContinueTime: 10000.0,
     dwellDelayTime: 10,
@@ -424,7 +424,7 @@ const Geofence = () => {
     longitude: 41.0,
     latitude: 27.0,
     radius: 340.0,
-    uniqueId: 'e00491',
+    uniqueId: "e00491",
     conversions: 2,
     validContinueTime: 1000.0,
     dwellDelayTime: 10,
@@ -461,11 +461,11 @@ const Geofence = () => {
         console.log(res);
         setReqCode(null);
       })
-      .catch(err => console.log('ERROR: GeofenceList deletion failed', err));
+      .catch(err => console.log("ERROR: GeofenceList deletion failed", err));
   }, []);
 
   const handleGeofenceEvent = useCallback(geo => {
-    console.log('GEOFENCE : ', geo);
+    console.log("GEOFENCE : ", geo);
     setGeofenceResponse(geo);
   });
 
@@ -490,54 +490,54 @@ const Geofence = () => {
       geofenceData.convertingLocation &&
       geofenceData.convertingLocation.map(loc => (
         <>
-          <Text style={styles.boldText}>{'  '}Location Data</Text>
+          <Text style={styles.boldText}>{"  "}Location Data</Text>
           <View style={styles.spaceBetweenRow}>
             <Text>
-              <Text>{'    '}Lat</Text>: {loc?.latitude || 0} | <Text>Long</Text>
+              <Text>{"    "}Lat</Text>: {loc?.latitude || 0} | <Text>Long</Text>
               : {loc?.longitude || 0}
             </Text>
           </View>
           <View style={styles.spaceBetweenRow}>
             <Text>
-              <Text>{'    '}Vertical Accuracy</Text>:{' '}
+              <Text>{"    "}Vertical Accuracy</Text>:{" "}
               {loc?.verticalAccuracyMeters || 0}
             </Text>
           </View>
           <View style={styles.spaceBetweenRow}>
             <Text>
-              <Text>{'    '}Accuracy</Text>: {loc?.accuracy || 0}
+              <Text>{"    "}Accuracy</Text>: {loc?.accuracy || 0}
             </Text>
           </View>
           <View style={styles.spaceBetweenRow}>
             <Text>
-              <Text>{'    '}Speed</Text>: {loc?.speed || 0}
+              <Text>{"    "}Speed</Text>: {loc?.speed || 0}
             </Text>
           </View>
           <View style={styles.spaceBetweenRow}>
             <Text>
-              <Text>{'    '}Time</Text>: {loc?.time || 0}
+              <Text>{"    "}Time</Text>: {loc?.time || 0}
             </Text>
           </View>
         </>
       ))
     ) : (
       <>
-        <Text style={styles.boldText}>{'  '}Error</Text>
+        <Text style={styles.boldText}>{"  "}Error</Text>
         <View style={styles.spaceBetweenRow}>
           <Text>
-            <Text>{'    '}Error Code</Text>: {geofenceData?.errorCode}
+            <Text>{"    "}Error Code</Text>: {geofenceData?.errorCode}
           </Text>
         </View>
         <View style={styles.spaceBetweenRow}>
           <Text>
-            <Text>{'    '}Message</Text>:{' '}
-            {geofenceData?.errorMessage || 'Unknown'}
+            <Text>{"    "}Message</Text>:{" "}
+            {geofenceData?.errorMessage || "Unknown"}
           </Text>
         </View>
       </>
     );
 
-  console.log('Geo Fence Location Data : ', geofenceData);
+  console.log("Geo Fence Location Data : ", geofenceData);
 
   return (
     <>
@@ -547,7 +547,7 @@ const Geofence = () => {
         </View>
         <View style={styles.spaceAroundContent}>
           <Button
-            title={reqCode ? 'Remove Geofence' : 'Create Geofence'}
+            title={reqCode ? "Remove Geofence" : "Create Geofence"}
             onPress={() => {
               if (reqCode) {
                 deleteGeofenceList(reqCode);
@@ -557,7 +557,7 @@ const Geofence = () => {
             }}
           />
           <Button
-            title={geoSubscribed ? 'Unsubscribe' : 'Subscribe'}
+            title={geoSubscribed ? "Unsubscribe" : "Subscribe"}
             onPress={() => {
               if (geoSubscribed) {
                 removeGeofenceEventListener();
@@ -569,29 +569,29 @@ const Geofence = () => {
         </View>
         <View style={styles.spaceBetweenRow}>
           <Text style={styles.sectionDescription}>
-            <Text style={styles.boldText}>Geofence Request Code</Text>:{' '}
-            {`${reqCode || ''}`}
+            <Text style={styles.boldText}>Geofence Request Code</Text>:{" "}
+            {`${reqCode || ""}`}
           </Text>
         </View>
         {geofenceData ? (
           <>
             <View style={styles.spaceBetweenRow}>
               <Text style={styles.sectionDescription}>
-                <Text style={styles.boldText}>Converting Geofence List</Text>:{' '}
+                <Text style={styles.boldText}>Converting Geofence List</Text>:{" "}
                 {`${geofenceData.convertingGeofenceList.map(
                   geo => geo.uniqueId,
-                ) || ''}`}
+                ) || ""}`}
               </Text>
             </View>
             <View>
               <Text style={styles.sectionDescription}>
-                <Text style={styles.boldText}>Conversion</Text>:{' '}
-                {`${geofenceData.conversion || ''}`}
+                <Text style={styles.boldText}>Conversion</Text>:{" "}
+                {`${geofenceData.conversion || ""}`}
               </Text>
             </View>
             <View>
               <Text style={styles.sectionDescription}>
-                <Text style={styles.boldText}>Converting Location</Text>{' '}
+                <Text style={styles.boldText}>Converting Location</Text>{" "}
               </Text>
               {geofenceLocationData}
             </View>
@@ -620,7 +620,7 @@ const ActivityIdentification = () => {
         console.log(res);
         setIdReqCode(res.requestCode);
       })
-      .catch(err => console.log('ERROR: Activity identification failed', err));
+      .catch(err => console.log("ERROR: Activity identification failed", err));
   }, []);
   const removeActivityIdentification = useCallback(idReqCode => {
     HMSLocation.ActivityIdentification.Native.deleteActivityIdentificationUpdates(
@@ -631,12 +631,12 @@ const ActivityIdentification = () => {
         setIdReqCode(null);
       })
       .catch(err =>
-        console.log('ERROR: Activity identification deletion failed', err),
+        console.log("ERROR: Activity identification deletion failed", err),
       );
   }, []);
 
   const handleActivityIdentification = useCallback(act => {
-    console.log('ACTIVITY : ', act);
+    console.log("ACTIVITY : ", act);
     setIdentificationResponse(act);
   }, []);
 
@@ -660,11 +660,11 @@ const ActivityIdentification = () => {
     identificationResponse.activityIdentificationDatas.map(idData => (
       <View key={Math.random()}>
         <Text style={styles.sectionDescription}>
-          <Text style={styles.boldText}>Activity Data</Text>:{' '}
+          <Text style={styles.boldText}>Activity Data</Text>:{" "}
         </Text>
         <Text style={styles.activityData}>
-          <Text>Possibility</Text>: {`${idData.possibility}`} |{' '}
-          <Text>Identification Activity</Text>:{' '}
+          <Text>Possibility</Text>: {`${idData.possibility}`} |{" "}
+          <Text>Identification Activity</Text>:{" "}
           {`${idData.identificationActivity}`}
         </Text>
       </View>
@@ -678,7 +678,7 @@ const ActivityIdentification = () => {
         </View>
         <View style={styles.spaceAroundContent}>
           <Button
-            title={idReqCode ? 'Remove Identification' : 'Get Identification'}
+            title={idReqCode ? "Remove Identification" : "Get Identification"}
             onPress={() => {
               if (idReqCode) {
                 removeActivityIdentification(idReqCode);
@@ -688,7 +688,7 @@ const ActivityIdentification = () => {
             }}
           />
           <Button
-            title={identificationSubscribed ? 'Unsubscribe' : 'Subscribe'}
+            title={identificationSubscribed ? "Unsubscribe" : "Subscribe"}
             onPress={() => {
               if (identificationSubscribed) {
                 removeActivityIdentificationEventListener();
@@ -700,32 +700,32 @@ const ActivityIdentification = () => {
         </View>
         <View style={styles.spaceBetweenRow}>
           <Text style={styles.sectionDescription}>
-            <Text style={styles.boldText}>Activity Request Code</Text>:{' '}
-            {`${idReqCode || ''}`}
+            <Text style={styles.boldText}>Activity Request Code</Text>:{" "}
+            {`${idReqCode || ""}`}
           </Text>
         </View>
         {identificationDatas ? (
           <View style={styles.spaceBetweenRow}>
             <Text style={styles.sectionDescription}>
-              <Text style={styles.boldText}>Time</Text>:{' '}
-              {`${identificationResponse?.time || ''}`} |{' '}
-              <Text style={styles.boldText}>Elapsed Time</Text>:{' '}
-              {`${identificationResponse?.elapsedTimeFromReboot || ''}`}
+              <Text style={styles.boldText}>Time</Text>:{" "}
+              {`${identificationResponse?.time || ""}`} |{" "}
+              <Text style={styles.boldText}>Elapsed Time</Text>:{" "}
+              {`${identificationResponse?.elapsedTimeFromReboot || ""}`}
             </Text>
           </View>
         ) : null}
         {identificationDatas ? (
           <View>
             <Text style={styles.sectionDescription}>
-              <Text style={styles.boldText}>Most Activity Data</Text>:{' '}
+              <Text style={styles.boldText}>Most Activity Data</Text>:{" "}
             </Text>
             <Text style={styles.activityData}>
-              <Text>Possibility</Text>:{' '}
+              <Text>Possibility</Text>:{" "}
               {`${identificationResponse?.mostActivityIdentification
-                ?.possibility || ''}`}{' '}
-              | <Text>Identification Activity</Text>:{' '}
+                ?.possibility || ""}`}{" "}
+              | <Text>Identification Activity</Text>:{" "}
               {`${identificationResponse?.mostActivityIdentification
-                ?.identificationActivity || ''}`}
+                ?.identificationActivity || ""}`}
             </Text>
           </View>
         ) : null}
@@ -742,7 +742,7 @@ const ActivityConversion = () => {
 
   // Activity Conversion
   const handleActivityConversion = useCallback(conv => {
-    console.log('CONVERSION : ', conv);
+    console.log("CONVERSION : ", conv);
     setConversionResponse(conv);
   }, []);
 
@@ -795,7 +795,7 @@ const ActivityConversion = () => {
         setConvReqCode(res.requestCode);
       })
       .catch(err =>
-        console.log('ERROR: Activity Conversion creation failed', err),
+        console.log("ERROR: Activity Conversion creation failed", err),
       );
   }, []);
 
@@ -808,7 +808,7 @@ const ActivityConversion = () => {
         setConvReqCode(null);
       })
       .catch(err =>
-        console.log('ERROR: Activity Conversion deletion failed', err),
+        console.log("ERROR: Activity Conversion deletion failed", err),
       );
   }, []);
 
@@ -832,17 +832,17 @@ const ActivityConversion = () => {
     conversionResponse.activityConversionDatas.map(conData => (
       <View key={Math.random()}>
         <Text style={styles.sectionDescription}>
-          <Text style={styles.boldText}>Conversion Data</Text>:{' '}
+          <Text style={styles.boldText}>Conversion Data</Text>:{" "}
         </Text>
         <Text style={styles.activityData}>
-          <Text>Elapsed Time From Reboot</Text>:{' '}
-          {`${conData?.elapsedTimeFromReboot || ''}`}
+          <Text>Elapsed Time From Reboot</Text>:{" "}
+          {`${conData?.elapsedTimeFromReboot || ""}`}
         </Text>
         <Text style={styles.activityData}>
-          <Text>Activity Type</Text>: {`${conData?.activityType || ''}`}
+          <Text>Activity Type</Text>: {`${conData?.activityType || ""}`}
         </Text>
         <Text style={styles.activityData}>
-          <Text>Conversion Type</Text>: {`${conData?.conversionType || ''}`}
+          <Text>Conversion Type</Text>: {`${conData?.conversionType || ""}`}
         </Text>
       </View>
     ));
@@ -856,10 +856,10 @@ const ActivityConversion = () => {
         </View>
         <View style={styles.spaceAroundContent}>
           <Button
-            title={convReqCode ? 'Remove Update' : 'Create Update'}
+            title={convReqCode ? "Remove Update" : "Create Update"}
             onPress={() => {
               if (convReqCode) {
-                console.log('CONV REQ CODE BEFORE REMOVAL', convReqCode);
+                console.log("CONV REQ CODE BEFORE REMOVAL", convReqCode);
                 deleteConversionUpdates(convReqCode);
               } else {
                 createConversionUpdates();
@@ -867,7 +867,7 @@ const ActivityConversion = () => {
             }}
           />
           <Button
-            title={conversionSubscribed ? 'Unsubscribe' : 'Subscribe'}
+            title={conversionSubscribed ? "Unsubscribe" : "Subscribe"}
             onPress={() => {
               if (conversionSubscribed) {
                 removeActivityConversionEventListener();
@@ -879,8 +879,8 @@ const ActivityConversion = () => {
         </View>
         <View style={styles.spaceBetweenRow}>
           <Text style={styles.sectionDescription}>
-            <Text style={styles.boldText}>Conversion Request Code</Text>:{' '}
-            {`${convReqCode || ''}`}
+            <Text style={styles.boldText}>Conversion Request Code</Text>:{" "}
+            {`${convReqCode || ""}`}
           </Text>
         </View>
         {conversionDatas}
@@ -889,7 +889,7 @@ const ActivityConversion = () => {
   );
 };
 
-const LocationPage = () => {
+const LocationPage = ({navigation}) => {
   return (
     <>
       <SafeAreaView>
@@ -898,6 +898,13 @@ const LocationPage = () => {
           style={styles.scrollView}>
           <Header />
           <View style={styles.body}>
+            <Button
+              title="Test Location flow"
+              onPress={() => {
+                navigation.navigate("LocationTest");
+              }}
+            />
+            <View style={styles.divider} />
             <Permissions />
             <View style={styles.divider} />
             <LocationAvailability />
@@ -913,7 +920,6 @@ const LocationPage = () => {
             <ActivityIdentification />
             <View style={styles.divider} />
             <ActivityConversion />
-            <View style={styles.divider} />
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -926,7 +932,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.lighter,
   },
   engine: {
-    position: 'absolute',
+    position: "absolute",
     right: 0,
   },
   body: {
@@ -938,46 +944,46 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 20,
-    fontWeight: '600',
+    fontWeight: "600",
     color: Colors.black,
   },
   sectionDescription: {
     marginTop: 8,
     fontSize: 16,
-    fontWeight: '400',
+    fontWeight: "400",
     color: Colors.dark,
   },
   activityData: {
     marginTop: 8,
     marginLeft: 5,
     fontSize: 16,
-    fontWeight: '400',
+    fontWeight: "400",
     color: Colors.dark,
   },
   highlight: {
-    fontWeight: '700',
+    fontWeight: "700",
   },
   footer: {
     color: Colors.dark,
     fontSize: 12,
-    fontWeight: '600',
+    fontWeight: "600",
     padding: 4,
     paddingRight: 12,
-    textAlign: 'right',
+    textAlign: "right",
   },
 
-  spaceBetweenRow: {flexDirection: 'row', justifyContent: 'space-between'},
+  spaceBetweenRow: {flexDirection: "row", justifyContent: "space-between"},
   divider: {
-    width: '90%',
-    alignSelf: 'center',
+    width: "90%",
+    alignSelf: "center",
     height: 1,
-    backgroundColor: 'grey',
+    backgroundColor: "grey",
     marginTop: 20,
   },
-  boldText: {fontWeight: 'bold'},
-  centralizeSelf: {alignSelf: 'center'},
-  centralizeContent: {flexDirection: 'row', justifyContent: 'center'},
-  spaceAroundContent: {flexDirection: 'row', justifyContent: 'space-around'},
+  boldText: {fontWeight: "bold"},
+  centralizeSelf: {alignSelf: "center"},
+  centralizeContent: {flexDirection: "row", justifyContent: "center"},
+  spaceAroundContent: {flexDirection: "row", justifyContent: "space-around"},
 });
 
 export default LocationPage;

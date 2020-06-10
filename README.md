@@ -32,6 +32,7 @@ For testing of React Native project, please [donwload](https://github.com/salman
 ![enter image description here](./screenshots/5.jpg)
 ![enter image description here](./screenshots/6.jpg)
 ![enter image description here](./screenshots/7.jpg)
+![Location complete work](./screenshots/location-work-flow.gif)
 
 ## How to build a React Native Android Library
 

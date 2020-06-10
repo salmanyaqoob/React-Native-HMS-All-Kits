@@ -25,6 +25,8 @@ import android.content.pm.PackageManager;
 
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
+import com.facebook.react.modules.core.PermissionAwareActivity;
+import com.facebook.react.modules.core.PermissionListener;
 
 import androidx.core.app.ActivityCompat;
 
@@ -66,6 +68,32 @@ public class PermissionUtils {
                 "android.permission.ACCESS_BACKGROUND_LOCATION"
             };
             ActivityCompat.requestPermissions(activity, permissions, 2);
+        }
+        Log.d(TAG, "requestPermissions -> apply permission");
+    }
+
+    public static void requestLocationPermissionNew(PermissionAwareActivity permissionAwareActivity, PermissionListener permissionListener) {
+        Log.d(TAG, "requestLocationPermission start");
+        Activity activity = (Activity) permissionAwareActivity;
+        if (hasLocationPermission(activity)) {
+            Log.d(TAG, "requestLocationPermission -> already have the permissions");
+        }
+
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
+            String[] permissions = {
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+            };
+//            ActivityCompat.requestPermissions(activity, permissions, 1);
+            permissionAwareActivity.requestPermissions(permissions, 11, permissionListener);
+        } else {
+            String[] permissions = {
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    "android.permission.ACCESS_BACKGROUND_LOCATION"
+            };
+//            ActivityCompat.requestPermissions(activity, permissions, 2);
+            permissionAwareActivity.requestPermissions(permissions, 22, permissionListener);
         }
         Log.d(TAG, "requestPermissions -> apply permission");
     }

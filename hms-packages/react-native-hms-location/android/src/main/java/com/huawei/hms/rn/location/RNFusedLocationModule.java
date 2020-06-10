@@ -19,11 +19,21 @@ package com.huawei.hms.rn.location;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.nfc.Tag;
+import android.os.Build;
 import android.util.Log;
 import android.os.Looper;
 import android.location.Location;
 import android.content.IntentSender;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+
+import com.facebook.react.bridge.ActivityEventListener;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -31,6 +41,8 @@ import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.bridge.ReadableMap;
 
+import com.facebook.react.modules.core.PermissionAwareActivity;
+import com.facebook.react.modules.core.PermissionListener;
 import com.huawei.hmf.tasks.OnFailureListener;
 import com.huawei.hmf.tasks.OnSuccessListener;
 import com.huawei.hms.location.FusedLocationProviderClient;
@@ -54,7 +66,7 @@ import com.huawei.hms.rn.location.utils.PermissionUtils;
 import com.huawei.hms.rn.location.utils.ReactUtils;
 
 
-public class RNFusedLocationModule extends ReactContextBaseJavaModule implements ResultHandler {
+public class RNFusedLocationModule extends ReactContextBaseJavaModule implements ResultHandler, ActivityEventListener, PermissionListener {
 
     private final ReactApplicationContext reactContext;
 
@@ -64,6 +76,8 @@ public class RNFusedLocationModule extends ReactContextBaseJavaModule implements
     private HashMap<String, LocationCallback> locationCallbackMap;
 
     private SettingsClient settingsClient;
+    private Promise mPromise;
+    private Promise settingPromise;
 
     public RNFusedLocationModule(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -72,6 +86,8 @@ public class RNFusedLocationModule extends ReactContextBaseJavaModule implements
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(reactContext);
         settingsClient = LocationServices.getSettingsClient(reactContext);
         locationCallbackMap = new HashMap<String, LocationCallback>();
+
+        reactContext.addActivityEventListener(this); //Do not forget this at any cost
     }
 
     @Override
@@ -121,8 +137,10 @@ public class RNFusedLocationModule extends ReactContextBaseJavaModule implements
     @ReactMethod
     public void checkLocationSettings(final ReadableMap locationRequestMap, final Promise promise) {
         if (LocationUtils.checkForObstacles(getCurrentActivity(), fusedLocationProviderClient, promise)) {
+            Log.i(TAG, "checkForObstacles is true");
             return;
         }
+        settingPromise = promise;
 
         settingsClient.checkLocationSettings(LocationUtils.fromReadableMapToLocationSettingsRequest.map(locationRequestMap))
                 .addOnSuccessListener(new OnSuccessListener<LocationSettingsResponse>() {
@@ -137,21 +155,19 @@ public class RNFusedLocationModule extends ReactContextBaseJavaModule implements
                     public void onFailure(Exception e) {
                         Log.e(TAG, "checkLocationSettings::onFailure -> " + e.getMessage());
 
-                    int statusCode = ((ApiException) e).getStatusCode();
-                    switch (statusCode) {
-                        case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
-                            try {
-                                ResolvableApiException rae = (ResolvableApiException) e;
-                                
-                                rae.startResolutionForResult(getCurrentActivity(), 0);
-                            } catch (IntentSender.SendIntentException sie) {
-                                Log.d(TAG, sie.getMessage());
-                            }
-                            break;
-                    }
-
-
-                        promise.reject(e);
+                        int statusCode = ((ApiException) e).getStatusCode();
+                        switch (statusCode) {
+                            case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                                try {
+                                    ResolvableApiException rae = (ResolvableApiException) e;
+                                    rae.startResolutionForResult(getCurrentActivity(), 0);
+                                } catch (IntentSender.SendIntentException sie) {
+                                    Log.d(TAG, sie.getMessage());
+                                    promise.reject(e);
+                                }
+                                break;
+                        }
+//                        promise.reject(e);
                     }
                 });
     }
@@ -174,7 +190,7 @@ public class RNFusedLocationModule extends ReactContextBaseJavaModule implements
                     Log.e(TAG, "getLastLocation::onSuccess -> cache is null");
                     promise.reject("last location cache is null");
                 }
-                
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -212,12 +228,12 @@ public class RNFusedLocationModule extends ReactContextBaseJavaModule implements
                         promise.resolve(LocationUtils.fromHWLocationToWritableMap(hwLocation));
                     }
                 }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(Exception e) {
-                        Log.e(TAG, "getLastLocationWithAddress::onFailure -> " + e.getMessage());
-                        promise.reject(e);
-                    }
-                });
+            @Override
+            public void onFailure(Exception e) {
+                Log.e(TAG, "getLastLocationWithAddress::onFailure -> " + e.getMessage());
+                promise.reject(e);
+            }
+        });
 
         Log.i(TAG, "getLastLocationWithAddress end");
     }
@@ -237,12 +253,12 @@ public class RNFusedLocationModule extends ReactContextBaseJavaModule implements
                         promise.resolve(Boolean.toString(locationAvailability.isLocationAvailable()));
                     }
                 }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(Exception e) {
-                        Log.e(TAG, "getLocationAvailability::onFailure:" + e.getMessage());
-                        promise.reject(e);
-                    }
-                });
+            @Override
+            public void onFailure(Exception e) {
+                Log.e(TAG, "getLocationAvailability::onFailure:" + e.getMessage());
+                promise.reject(e);
+            }
+        });
 
         Log.i(TAG, "getLocationAvailability end");
     }
@@ -328,12 +344,12 @@ public class RNFusedLocationModule extends ReactContextBaseJavaModule implements
                         promise.resolve(ReactUtils.basicMap("id", id));
                     }
                 }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(Exception e) {
-                        Log.i(TAG, "requestLocationUpdatesWithCallback onFailure:" + e.getMessage());
-                        promise.reject(e);
-                    }
-                });
+            @Override
+            public void onFailure(Exception e) {
+                Log.i(TAG, "requestLocationUpdatesWithCallback onFailure:" + e.getMessage());
+                promise.reject(e);
+            }
+        });
 
         Log.i(TAG, "call requestLocationUpdatesWithCallback success.");
     }
@@ -364,8 +380,15 @@ public class RNFusedLocationModule extends ReactContextBaseJavaModule implements
     }
 
     @ReactMethod
-    public void requestPermission() {
-        PermissionUtils.requestLocationPermission(getCurrentActivity());
+    public void requestPermission(final Promise promise) {
+        mPromise = promise;
+//        PermissionUtils.requestLocationPermission(getCurrentActivity());
+        PermissionAwareActivity activity = (PermissionAwareActivity) getCurrentActivity();
+        if (activity == null) {
+            // Handle null case
+            Log.e(TAG, "activity is null in location case");
+        }
+        PermissionUtils.requestLocationPermissionNew(activity, this);
     }
 
     @ReactMethod
@@ -378,4 +401,36 @@ public class RNFusedLocationModule extends ReactContextBaseJavaModule implements
         ReactUtils.sendEvent(getReactApplicationContext(), Event.SCANNING_RESULT.getVal(), params);
     }
 
+    @Override
+    public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
+        Log.e(TAG,"onActivityResult");
+        if (requestCode == 0 && resultCode == Activity.RESULT_OK) {
+            Log.e(TAG,"request accepted");
+            settingPromise.resolve("check_setting_again");
+        }
+    }
+
+    @Override
+    public void onNewIntent(Intent intent) {
+
+    }
+
+    @Override
+    public boolean onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        Log.d(TAG, "reach on onRequestPermissionsResult: "+ String.valueOf(requestCode).toString() );
+        Boolean permissionResult = PermissionUtils.hasLocationPermission(getCurrentActivity());
+        switch(requestCode) {
+            case 11: // Build.VERSION_CODES.P
+                Log.d(TAG, "reach on Build.VERSION_CODES.P");
+                mPromise.resolve(permissionResult);
+                Log.d(TAG, "permissionResult: "+permissionResult.toString());
+                return permissionResult;
+            case 22: // ACCESS_BACKGROUND_LOCATION
+                Log.d(TAG, "reach on ACCESS_BACKGROUND_LOCATION");
+                mPromise.resolve(permissionResult);
+                Log.d(TAG, "permissionResult: "+permissionResult.toString());
+                return permissionResult;
+        }
+        return false;
+    }
 }
