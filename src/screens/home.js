@@ -108,6 +108,16 @@ const Home = ({navigation}) => {
 
             <View style={styles.appButtonStyle}>
               <Button
+                title="Huawei Ads"
+                onPress={() => {
+                  navigation.navigate("Ads");
+                }}
+                style={styles.appButton}
+              />
+            </View>
+
+            <View style={styles.appButtonStyle}>
+              <Button
                 title="HMS Scan Kit"
                 onPress={commingSoon}
                 style={styles.appButton}

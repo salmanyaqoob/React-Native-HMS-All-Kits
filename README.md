@@ -41,6 +41,7 @@ Please read this [article](https://medium.com/@mitchclay0/how-to-build-a-react-n
     yarn add ./hms-packages/react-native-hms-location
     yarn add ./hms-packages/react-native-hms-map
     yarn add ./hms-packages/react-native-hwpush
+    yarn add ./hms-packages/react-native-hms-ads
 
 ## Remove plugins to Project
 
@@ -48,6 +49,7 @@ Please read this [article](https://medium.com/@mitchclay0/how-to-build-a-react-n
     yarn remove react-native-hms-location
     yarn remove react-native-hms-map
     yarn remove react-native-hwpush
+    yarn remove react-native-hms-ads
 
 ## Enabling/Disabling the Debug Mode for Analytics
 
@@ -55,6 +57,10 @@ Please read this [article](https://medium.com/@mitchclay0/how-to-build-a-react-n
     shell setprop debug.huawei.hms.analytics.app .none.
 
 ## Official HMS Resources
+
+### HMS All Plugins:
+
+[https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin](https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin)
 
 ### Huawei Map Kit:
 

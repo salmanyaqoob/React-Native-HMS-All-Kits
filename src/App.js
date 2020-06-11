@@ -22,6 +22,8 @@ import DataPage from "./screens/push-screen/DataPage";
 import Analytics from "./screens/Analytics";
 import Account from "./screens/Account";
 
+import AdsPage from "./screens/Ads";
+
 const AppNavigator = createStackNavigator(
   {
     Home: {
@@ -87,6 +89,13 @@ const AppNavigator = createStackNavigator(
         headerTitle: "Huawei Account",
       },
       path: "Account",
+    },
+    Ads: {
+      screen: AdsPage,
+      navigationOptions: {
+        headerTitle: "Huawei Ads",
+      },
+      path: "Ads",
     },
   },
   {
