@@ -5331,6 +5331,9 @@ react-native-hms-location@./hms-packages/react-native-hms-location:
 react-native-hms-map@./hms-packages/react-native-hms-map:
   version "1.0.0"
 
+react-native-hms-site@./hms-packages/react-native-hms-site:
+  version "4.0.4"
+
 react-native-hwpush@./hms-packages/react-native-hwpush:
   version "1.0.0"
 

@@ -1,0 +1,39 @@
+{
+  "name": "react-native-hms-site",
+  "title": "React Native Hms Site",
+  "version": "4.0.4",
+  "description": "",
+  "main": "./src/index.js",
+  "types": "./types",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react-native"
+  ],
+  "author": {
+    "name": "",
+    "email": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "",
+    "baseUrl": ""
+  },
+  "license": "Apache-2.0",
+  "peerDependencies": {
+    "react": "^16.8.1",
+    "react-native": ">=0.60.0-rc.0 <1.0.x"
+  },
+  "devDependencies": {
+    "react": "^16.9.0",
+    "react-native": "^0.61.5"
+  },
+  "files": [
+    "./src",
+    "./android",
+    "./LICENCE",
+    "./package.json",
+    "./README.md"
+  ]
+}

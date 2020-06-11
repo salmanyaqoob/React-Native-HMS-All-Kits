@@ -21,8 +21,8 @@ import Push from "./screens/Push";
 import DataPage from "./screens/push-screen/DataPage";
 import Analytics from "./screens/Analytics";
 import Account from "./screens/Account";
-
 import AdsPage from "./screens/Ads";
+import SitePage from "./screens/Site";
 
 const AppNavigator = createStackNavigator(
   {
@@ -96,6 +96,13 @@ const AppNavigator = createStackNavigator(
         headerTitle: "Huawei Ads",
       },
       path: "Ads",
+    },
+    Site: {
+      screen: SitePage,
+      navigationOptions: {
+        headerTitle: "HMS Site Kit",
+      },
+      path: "Site",
     },
   },
   {

@@ -30,11 +30,13 @@ For testing of React Native project, please [donwload](https://github.com/salman
 
 <img src="./screenshots/4.jpg" width="250"> <img src="./screenshots/5.jpg" width="250"> <img src="./screenshots/6.jpg" width="250">
 
-<img src="./screenshots/7.jpg" width="250"> <img src="./screenshots/location-work-flow.gif" width="250"> <img src="./screenshots/huawei-ads.gif" width="250">
+<img src="./screenshots/7.jpg" width="250"> <img src="./screenshots/8.jpg" width="250"> <img src="./screenshots/location-work-flow.gif" width="250">
+
+<img src="./screenshots/huawei-ads.gif" width="250">
 
 ## How to build a React Native Android Library
 
-Please read this [article](https://medium.com/@mitchclay0/how-to-build-a-react-native-android-library-5c1eb22d17e1) to have idea about how to make your own customize React Native Android Library.
+Please read this [Creating a Native Module in React Native](https://medium.com/wix-engineering/creating-a-native-module-in-react-native-93bab0123e46), [HMS Official SDKs and creating custom bridges](https://forums.developer.huawei.com/forumPortal/en/topicview?tid=0201212559182230112&fid=0101187876626530001) to have idea about how to make your own customize React Native Android Library.
 
 ## Install plugins to Project
 
@@ -43,6 +45,7 @@ Please read this [article](https://medium.com/@mitchclay0/how-to-build-a-react-n
     yarn add ./hms-packages/react-native-hms-map
     yarn add ./hms-packages/react-native-hwpush
     yarn add ./hms-packages/react-native-hms-ads
+    yarn add ./hms-packages/react-native-hms-site
 
 ## Remove plugins to Project
 
@@ -51,6 +54,7 @@ Please read this [article](https://medium.com/@mitchclay0/how-to-build-a-react-n
     yarn remove react-native-hms-map
     yarn remove react-native-hwpush
     yarn remove react-native-hms-ads
+    yarn remove react-native-hms-site
 
 ## Enabling/Disabling the Debug Mode for Analytics
 

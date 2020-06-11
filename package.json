@@ -40,6 +40,7 @@
     "react-native-hms-ads": "./hms-packages/react-native-hms-ads",
     "react-native-hms-location": "./hms-packages/react-native-hms-location",
     "react-native-hms-map": "./hms-packages/react-native-hms-map",
+    "react-native-hms-site": "./hms-packages/react-native-hms-site",
     "react-native-hwpush": "./hms-packages/react-native-hwpush",
     "react-native-reanimated": "^1.9.0",
     "react-native-safe-area-context": "^2.0.3",

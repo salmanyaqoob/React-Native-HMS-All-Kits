@@ -118,6 +118,16 @@ const Home = ({navigation}) => {
 
             <View style={styles.appButtonStyle}>
               <Button
+                title="HMS Site Kit"
+                onPress={() => {
+                  navigation.navigate("Site");
+                }}
+                style={styles.appButton}
+              />
+            </View>
+
+            <View style={styles.appButtonStyle}>
+              <Button
                 title="HMS Scan Kit"
                 onPress={commingSoon}
                 style={styles.appButton}
