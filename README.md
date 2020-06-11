@@ -12,6 +12,7 @@ React Native HMS packages integrated in this project:
 4.  **HMS Push Kit.**
 5.  **Huawei Analytics Kit.**
 6.  **Huawei Account Kit.**
+7.  **Huawei Ads Kit.**
 
 ## Dowload APK
 
