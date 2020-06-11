@@ -29,7 +29,7 @@ For testing of React Native project, please [donwload](https://github.com/salman
 
 <img src="./screenshots/4.jpg" width="250"> <img src="./screenshots/5.jpg" width="250"> <img src="./screenshots/6.jpg" width="250">
 
-<img src="./screenshots/7.jpg" width="250"> <img src="./screenshots/location-work-flow.gif" width="250">
+<img src="./screenshots/7.jpg" width="250"> <img src="./screenshots/location-work-flow.gif" width="250"> <img src="./screenshots/huawei-ads.gif" width="250">
 
 ## How to build a React Native Android Library
 
@@ -105,3 +105,27 @@ Please read this [article](https://medium.com/@mitchclay0/how-to-build-a-react-n
 #### Document: [https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/react-native-development](https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/react-native-development)
 
 #### SDK Library: [https://developer.huawei.com/consumer/en/codelab/HMSAnalyticsKit-ReactNative/index.html#2](https://developer.huawei.com/consumer/en/codelab/HMSAnalyticsKit-ReactNative/index.html#2)
+
+### Huawei Ads:
+
+#### Document: [https://developer.huawei.com/consumer/en/doc/development/HMS-Plugin-Guides/introduction-0000001050196714](https://developer.huawei.com/consumer/en/doc/development/HMS-Plugin-Guides/introduction-0000001050196714)
+
+#### Sample Code: [https://developer.huawei.com/consumer/en/doc/development/HMS-Plugin-Examples/react-native-sample-code-0000001050201946](https://developer.huawei.com/consumer/en/doc/development/HMS-Plugin-Examples/react-native-sample-code-0000001050201946)
+
+#### SDK Library: [https://developer.huawei.com/consumer/en/doc/development/HMS-Plugin-Library/react-native-sdk-download-0000001050444343](https://developer.huawei.com/consumer/en/doc/development/HMS-Plugin-Library/react-native-sdk-download-0000001050444343)
+
+### HMS Site Kit:
+
+#### Document: [https://developer.huawei.com/consumer/en/doc/development/HMS-Plugin-Guides/introduction-0000001050176404](https://developer.huawei.com/consumer/en/doc/development/HMS-Plugin-Guides/introduction-0000001050176404)
+
+#### Sample Code: [https://developer.huawei.com/consumer/en/doc/development/HMS-Plugin-Examples/react-native-sample-code-0000001050329132](https://developer.huawei.com/consumer/en/doc/development/HMS-Plugin-Examples/react-native-sample-code-0000001050329132)
+
+#### SDK Library: [https://developer.huawei.com/consumer/en/doc/development/HMS-Plugin-Library/rn-sdk-download-0000001050317544](https://developer.huawei.com/consumer/en/doc/development/HMS-Plugin-Library/rn-sdk-download-0000001050317544)
+
+### Note:
+
+This article and repository will be update frequently based on new HMS kits compatible with React Native Framework.
+
+### Conclusion
+
+This article and repository will be helpful for developers as a kick-start project. Developers can check the project configuration and code and make similar changes in your React Native project to quickly get up and running for HMS solution.
