@@ -186,6 +186,7 @@ public class RNFusedLocationModule extends ReactContextBaseJavaModule implements
                 if(location != null){
                     Log.i(TAG, "getLastLocation::onSuccess -> " + location.toString());
                     promise.resolve(LocationUtils.fromLocationToWritableMap(location));
+                    // promise.resolve("{lat: " + location.getLatitude() + ", long: "+ location.getLatitude() + "}");
                 } else {
                     Log.e(TAG, "getLastLocation::onSuccess -> cache is null");
                     promise.reject("last location cache is null");
