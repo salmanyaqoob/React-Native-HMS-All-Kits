@@ -912,6 +912,14 @@
   dependencies:
     "@hapi/hoek" "^8.3.0"
 
+"@hmscore/react-native-hms-location@./hms-packages/new/react-native-hms-location":
+  version "5.0.0-301-02"
+
+"@hmscore/react-native-hms-map@^5.0.3-302-01":
+  version "5.0.3-302-01"
+  resolved "https://registry.yarnpkg.com/@hmscore/react-native-hms-map/-/react-native-hms-map-5.0.3-302-01.tgz#ee6f2a03a8cd52b6712654252aac06f86a587d8c"
+  integrity sha512-E3Ez5twEYCznbHRoXoVOprs1qAURk+lST5RK6saTp00GipJwhiLuGcR4JYWx/LKm1eQTj2jUkbEnCGpi9FGmEg==
+
 "@jest/console@^24.7.1", "@jest/console@^24.9.0":
   version "24.9.0"
   resolved "https://registry.yarnpkg.com/@jest/console/-/console-24.9.0.tgz#79b1bc06fb74a8cfb01cbdedf945584b1b9707f0"
@@ -5324,12 +5332,6 @@ react-native-ha-interface@./hms-packages/react-native-ha-interface:
 
 react-native-hms-ads@./hms-packages/react-native-hms-ads:
   version "4.0.4"
-
-react-native-hms-location@./hms-packages/react-native-hms-location:
-  version "1.0.0"
-
-react-native-hms-map@./hms-packages/react-native-hms-map:
-  version "1.0.0"
 
 react-native-hms-site@./hms-packages/react-native-hms-site:
   version "4.0.4"

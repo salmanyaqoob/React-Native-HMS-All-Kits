@@ -16,7 +16,7 @@ Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
 
 import React, {Component} from 'react';
 import {View} from 'react-native';
-import {Circle} from 'react-native-hms-map';
+import HMSMap, { Circle } from "@hmscore/react-native-hms-map";
 
 const circle1 = {latitude: 41.01019, longitude: 28.974475};
 const circle2 = {latitude: 41.01563, longitude: 29.052667};

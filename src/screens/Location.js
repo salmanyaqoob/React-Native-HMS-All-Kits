@@ -14,9 +14,16 @@ import {headerStyles} from "../styles/headerStyles";
 
 import {Colors} from "react-native/Libraries/NewAppScreen";
 
-import HMSLocation from "react-native-hms-location";
+import HMSLocation from '@hmscore/react-native-hms-location';
 
-const Header = () => (
+const Header = () => {
+// Initialize Location Kit
+useEffect(() => {
+  HMSLocation.LocationKit.Native.init()
+      .then(_ => console.log("Done loading"))
+      .catch(ex => console.log("Error while initializing." + ex));
+}, []);
+return (
   <>
     <View style={headerStyles.headerSection}>
       <View style={headerStyles.headerTitleWrapper}>
@@ -31,85 +38,66 @@ const Header = () => (
     </View>
   </>
 );
+}
 
 const Permissions = () => {
   const [hasLocationPermission, setHasLocationPermission] = useState(false);
-  const [
-    hasActivityIdentificationPermission,
-    setHasActivityIdentificationPermission,
-  ] = useState(false);
+  const [hasActivityIdentificationPermission, setHasActivityIdentificationPermission] = useState(false);
 
   useEffect(() => {
-    console.log("useEffect");
-    // Check location permissions
-    HMSLocation.FusedLocation.Native.hasPermission()
-      .then(result => setHasLocationPermission(result))
-      .catch(ex =>
-        console.log("Error while getting location permission info: " + ex),
-      );
+      // Check location permissions
+      HMSLocation.FusedLocation.Native.hasPermission()
+          .then(result => setHasLocationPermission(result))
+          .catch(ex => console.log("Error while getting location permission info: " + ex));
 
-    // Check ActivityIdentification permissions
-    HMSLocation.ActivityIdentification.Native.hasPermission()
-      .then(result => setHasActivityIdentificationPermission(result))
-      .catch(ex =>
-        console.log(
-          "Error while getting activity identification permission info: " + ex,
-        ),
-      );
-  });
+      // Check ActivityIdentification permissions
+      HMSLocation.ActivityIdentification.Native.hasPermission()
+          .then(result => setHasActivityIdentificationPermission(result))
+          .catch(ex => console.log("Error while getting activity identification permission info: " + ex));
+  }, []);
 
   const requestLocationPermisson = useCallback(() => {
-    HMSLocation.FusedLocation.Native.requestPermission();
+      HMSLocation.FusedLocation.Native.requestPermission();
   }, []);
 
   const requestActivityIdentificationPermisson = useCallback(() => {
-    HMSLocation.ActivityIdentification.Native.requestPermission();
+      HMSLocation.ActivityIdentification.Native.requestPermission();
   }, []);
-  const hasLocationPermissionText = hasLocationPermission
-    ? "Location permissions are granted."
-    : "Location permissions are not granted.";
 
-  const hasActivityIdentificationPermissionText = hasActivityIdentificationPermission
-    ? "ActivityIdentification permissions are granted."
-    : "ActivityIdentification permissions are not granted.";
   return (
-    <>
-      <View style={styles.sectionContainer}>
-        <View style={styles.spaceBetweenRow}>
-          <Text style={styles.sectionTitle}>Permissions</Text>
+      <>
+        <View style={styles.sectionContainer}>
+          <View style={styles.spaceBetweenRow}>
+            <Text style={styles.sectionTitle}>Permissions</Text>
+          </View>
         </View>
-      </View>
-      <View style={styles.sectionContainer}>
-        <View style={styles.spaceBetweenRow}>
-          <Text style={styles.sectionTitle}>Location</Text>
-          <Button
-            title="Request Permission"
-            onPress={requestLocationPermisson}
-          />
+        <View style={styles.sectionContainer}>
+          <View style={styles.spaceBetweenRow}>
+            <Text style={styles.sectionTitle}>Location</Text>
+            <Button
+              title="Request Permission"
+              onPress={requestLocationPermisson}
+              />
+          </View>
+          <View style={styles.spaceBetweenRow}>
+            <Text style={styles.monospaced}>{JSON.stringify(hasLocationPermission, null, 2)}</Text>
+          </View>
         </View>
-        <View style={styles.spaceBetweenRow}>
-          <Text style={styles.sectionDescription}>
-            {hasLocationPermissionText}
-          </Text>
-        </View>
-      </View>
 
-      <View style={styles.sectionContainer}>
-        <View style={styles.spaceBetweenRow}>
-          <Text style={styles.sectionTitle}>ActivityIdentification</Text>
-          <Button
-            title="Request Permission"
-            onPress={requestActivityIdentificationPermisson}
-          />
+        <View style={styles.sectionContainer}>
+          <View style={styles.spaceBetweenRow}>
+            <Text style={styles.sectionTitle}>ActivityIdentification</Text>
+            <Button
+              title="Request Permission"
+              onPress={requestActivityIdentificationPermisson}
+              />
+          </View>
+          <View style={styles.spaceBetweenRow}>
+            <Text style={styles.monospaced}>{JSON.stringify(hasActivityIdentificationPermission, null, 2)}</Text>
+          </View>
         </View>
-        <View style={styles.spaceBetweenRow}>
-          <Text style={styles.sectionDescription}>
-            {hasActivityIdentificationPermissionText}
-          </Text>
-        </View>
-      </View>
-    </>
-  );
+      </>
+  )
 };
 
 const LocationAvailability = () => {
@@ -209,78 +197,50 @@ const LocationSettings = () => {
   const [locationSettings, setLocationSettings] = useState();
 
   const checkLocationSettings = useCallback(() => {
-    const locationRequest = HMSLocation.FusedLocation.Request.configure({
-      id: "e0048e" + Math.random() * 10000,
-      priority:
-        HMSLocation.FusedLocation.PriorityConstants.PRIORITY_HIGH_ACCURACY,
-      interval: 3,
-      numUpdates: 10,
-      fastestInterval: 1000.0,
-      expirationTime: 200000.0,
-      expirationTimeDuration: 200000.0,
-      smallestDisplacement: 0.0,
-      maxWaitTime: 2000000.0,
-      needAddress: true,
-      language: "en",
-      countryCode: "en",
-    }).build();
+      const locationRequest = {
+          id: "locationRequest" + Math.random() * 10000,
+          priority: HMSLocation.FusedLocation.PriorityConstants.PRIORITY_HIGH_ACCURACY,
+          interval: 5000,
+          numUpdates: 20,
+          fastestInterval: 6000,
+          expirationTime: 100000,
+          expirationTimeDuration: 100000,
+          smallestDisplacement: 0,
+          maxWaitTime: 1000.0,
+          needAddress: false,
+          language: "en",
+          countryCode: "en",
+      };
 
-    const locationSettingsRequest = HMSLocation.FusedLocation.SettingsRequest.configure(
-      {
-        locationRequests: [locationRequest],
-        alwaysShow: false,
-        needBle: false,
-      },
-    ).build();
+      const locationSettingsRequest = {
+          locationRequests: [locationRequest],
+          alwaysShow: false,
+          needBle: false,
+      };
 
-    HMSLocation.FusedLocation.Native.checkLocationSettings(
-      locationSettingsRequest,
-    )
-      .then(res => setLocationSettings(res))
-      .catch(ex => console.log("Error while getting location settings. " + ex));
+      HMSLocation.FusedLocation.Native.checkLocationSettings(locationSettingsRequest)
+          .then(res => setLocationSettings(res))
+          .catch(ex => console.log("Error while getting location settings. " + ex))
   });
 
   return (
-    <>
-      <View style={styles.sectionContainer}>
-        <View style={styles.spaceBetweenRow}>
-          <Text style={styles.sectionTitle}>Location Settings</Text>
-          <Button title="Check" onPress={checkLocationSettings} />
+      <>
+        <View style={styles.sectionContainer}>
+          <View style={styles.spaceBetweenRow}>
+            <Text style={styles.sectionTitle}>Location Settings</Text>
+            <Button title="Check" onPress={checkLocationSettings} />
+          </View>
+          <View style={styles.spaceBetweenRow}>
+            <Text style={styles.sectionDescription}>
+            </Text>
+          </View>
+          <View style={styles.spaceBetweenRow}>
+            <Text style={styles.monospaced}>
+              {JSON.stringify(locationSettings, null, 2)}
+            </Text>
+          </View>
         </View>
-        <View style={styles.spaceBetweenRow}>
-          <Text style={styles.sectionDescription}>
-            <Text style={styles.boldText}>BLE Present</Text>:{" "}
-            {`${locationSettings?.isBlePresent || ""}`} |{" "}
-            <Text style={styles.boldText}>BLE Usable</Text>:{" "}
-            {`${locationSettings?.isBleUsable || ""}`}
-          </Text>
-        </View>
-        <View style={styles.spaceBetweenRow}>
-          <Text style={styles.sectionDescription}>
-            <Text style={styles.boldText}>GPS Present</Text>:{" "}
-            {`${locationSettings?.isGpsPresent || ""}`} |{" "}
-            <Text style={styles.boldText}>GPS Usable</Text>:{" "}
-            {`${locationSettings?.isGpsUsable || ""}`}
-          </Text>
-        </View>
-        <View style={styles.spaceBetweenRow}>
-          <Text style={styles.sectionDescription}>
-            <Text style={styles.boldText}>Location Present</Text>:{" "}
-            {`${locationSettings?.isLocationPresent || ""}`} |{" "}
-            <Text style={styles.boldText}>Location Usable</Text>:{" "}
-            {`${locationSettings?.isLocationUsable || ""}`}
-          </Text>
-        </View>
-        <View style={styles.spaceBetweenRow}>
-          <Text style={styles.sectionDescription}>
-            <Text style={styles.boldText}>Network Location Present</Text>:{" "}
-            {`${locationSettings?.isNetworkLocationPresent || ""}`} |{" "}
-            <Text style={styles.boldText}>Network Location Usable</Text>:{" "}
-            {`${locationSettings?.isNetworkLocationUsable || ""}`}
-          </Text>
-        </View>
-      </View>
-    </>
+      </>
   );
 };
 
@@ -290,117 +250,117 @@ const LocationInfo = () => {
   const [autoUpdateEnabled, setAutoUpdateEnabled] = useState(false);
 
   const getLocation = useCallback(() => {
-    HMSLocation.FusedLocation.Native.getLastLocation()
-      .then(pos => setPosition(pos))
-      .catch(err => console.log("Failed to get last location", err));
+      HMSLocation.FusedLocation.Native.getLastLocation()
+          .then(pos => setPosition(pos))
+          .catch(err => console.log('Failed to get last location', err));
   }, []);
 
   const requestLocationUpdate = useCallback(() => {
-    const LocationRequest = HMSLocation.FusedLocation.Request.configure({
-      id: "e0048e" + Math.random() * 10000,
-      priority:
-        HMSLocation.FusedLocation.PriorityConstants.PRIORITY_HIGH_ACCURACY,
-      interval: 3,
-      numUpdates: 10,
-      fastestInterval: 1000.0,
-      expirationTime: 200000.0,
-      expirationTimeDuration: 200000.0,
-      smallestDisplacement: 0.0,
-      maxWaitTime: 2000000.0,
-      needAddress: true,
-      language: "en",
-      countryCode: "en",
-    }).build();
+      const LocationRequest = {
+          id: 'e0048e' + Math.random() * 10000,
+          priority: HMSLocation.FusedLocation.PriorityConstants.PRIORITY_HIGH_ACCURACY,
+          interval: 3,
+          numUpdates: 10,
+          fastestInterval: 1000.0,
+          expirationTime: 200000.0,
+          expirationTimeDuration: 200000.0,
+          smallestDisplacement: 0.0,
+          maxWaitTime: 2000000.0,
+          needAddress: true,
+          language: 'en',
+          countryCode: 'en',
+      };
 
-    HMSLocation.FusedLocation.Native.requestLocationUpdatesWithCallback(
-      LocationRequest,
-    )
-      .then(({id}) => setLocationUpdateId(id))
-      .catch(ex =>
-        console.log("Exception while requestLocationUpdatesWithCallback " + ex),
-      );
+      HMSLocation.FusedLocation.Native.requestLocationUpdatesWithCallback(LocationRequest)
+          .then(({ requestCode }) => setLocationUpdateId(requestCode))
+          .catch(ex => console.log("Exception while requestLocationUpdatesWithCallback " + ex))
 
-    // FIXME:
-    HMSLocation.FusedLocation.Native.getLastLocationWithAddress(
-      LocationRequest,
-    ).then(res => {
-      console.log("Adrress: ", res);
-    });
+      // TODO: Move this to somewhere else:
+      HMSLocation.FusedLocation.Native.getLastLocationWithAddress(LocationRequest)
+          .then(res => { console.log('Adrress: ', res) });
   }, []);
 
-  const handleLocationUpdate = useCallback(location => {
-    console.log(location);
-    setPosition(location);
-  }, []);
+  const handleLocationUpdate = location => {
+      console.log(location);
+      setPosition(location);
+  };
 
   const addFusedLocationEventListener = useCallback(() => {
-    requestLocationUpdate();
-    HMSLocation.FusedLocation.Events.addFusedLocationEventListener(
-      handleLocationUpdate,
-    );
-    setAutoUpdateEnabled(true);
+      requestLocationUpdate();
+      HMSLocation.FusedLocation.Events.addFusedLocationEventListener(
+          handleLocationUpdate,
+      );
+      setAutoUpdateEnabled(true);
   }, []);
 
   const removeFusedLocationEventListener = useCallback(() => {
-    HMSLocation.FusedLocation.Events.removeFusedLocationEventListener(
-      locationUpdateId,
-      handleLocationUpdate,
-    );
-    setAutoUpdateEnabled(false);
+      HMSLocation.FusedLocation.Events.removeFusedLocationEventListener(
+          locationUpdateId,
+          handleLocationUpdate,
+      );
+      setAutoUpdateEnabled(false);
   }, [locationUpdateId]);
 
   return (
-    <>
-      <View style={styles.sectionContainer}>
-        <View style={styles.spaceBetweenRow}>
-          <Text style={styles.sectionTitle}>Location Info</Text>
-          <Button title="Get last location" onPress={getLocation} />
-        </View>
-        <View style={styles.spaceBetweenRow}>
-          <Text style={styles.sectionDescription}>
-            <Text style={styles.boldText}>LAT</Text>: {position?.latitude || 0}{" "}
-            | <Text style={styles.boldText}>LONG</Text>:{" "}
-            {position?.longitude || 0}
-          </Text>
-        </View>
-        <View style={styles.spaceBetweenRow}>
-          <Text style={styles.sectionDescription}>
-            <Text style={styles.boldText}>VERTICAL ACCURACY</Text>:{" "}
-            {position?.verticalAccuracyMeters || 0}
-          </Text>
-        </View>
-        <View style={styles.spaceBetweenRow}>
-          <Text style={styles.sectionDescription}>
-            <Text style={styles.boldText}>ACCURACY</Text>:{" "}
-            {position?.accuracy || 0}
-          </Text>
-        </View>
-        <View style={styles.spaceBetweenRow}>
-          <Text style={styles.sectionDescription}>
-            <Text style={styles.boldText}>SPEED</Text>: {position?.speed || 0}
-          </Text>
-        </View>
-        <View style={styles.spaceBetweenRow}>
-          <Text style={styles.sectionDescription}>
-            <Text style={styles.boldText}>TIME</Text>: {position?.time || 0}
-          </Text>
-        </View>
-        <View style={styles.centralizeContent}>
-          <Button
-            title={
-              autoUpdateEnabled ? "Disable auto-update" : "Enable auto-update"
-            }
-            onPress={() => {
-              if (autoUpdateEnabled) {
-                removeFusedLocationEventListener();
-              } else {
-                addFusedLocationEventListener();
+      <>
+        <View style={styles.sectionContainer}>
+          <View style={styles.spaceBetweenRow}>
+            <Text style={styles.sectionTitle}>Location Info</Text>
+            <Button title="Get last location" onPress={getLocation} />
+          </View>
+          <View style={styles.spaceBetweenRow}>
+            <Text style={styles.monospaced}>
+              {JSON.stringify(position, null, 2)}
+            </Text>
+          </View>
+          <View style={styles.centralizeContent}>
+            <Button
+              title={
+                  autoUpdateEnabled
+                      ? 'Disable auto-update'
+                      : 'Enable auto-update'
               }
-            }}
-          />
+              onPress={() => {
+                  if (autoUpdateEnabled) {
+                      removeFusedLocationEventListener();
+                  } else {
+                      addFusedLocationEventListener();
+                  }
+              }}
+              />
+          </View>
         </View>
-      </View>
-    </>
+      </>
+  )
+}
+
+const LocationEnhance = () => {
+  const [navigationState, setNavigationState] = useState();
+
+  const getNavigationState = useCallback(() => {
+      HMSLocation.FusedLocation.Native.getNavigationContextState(HMSLocation.FusedLocation.NavigationRequestConstants.IS_SUPPORT_EX)
+          .then(res => setNavigationState(res))
+          .catch(ex => console.log("Error while getting navigation state. " + ex))
+  });
+
+  return (
+      <>
+        <View style={styles.sectionContainer}>
+          <View style={styles.spaceBetweenRow}>
+            <Text style={styles.sectionTitle}>Location Enhance</Text>
+            <Button title="Check" onPress={getNavigationState} />
+          </View>
+          <View style={styles.spaceBetweenRow}>
+            <Text style={styles.sectionDescription}>
+            </Text>
+          </View>
+          <View style={styles.spaceBetweenRow}>
+            <Text style={styles.monospaced}>
+              {JSON.stringify(navigationState, null, 2)}
+            </Text>
+          </View>
+        </View>
+      </>
   );
 };
 
@@ -409,331 +369,214 @@ const Geofence = () => {
   const [geoSubscribed, setGeoSubscribed] = useState(false);
   const [geofenceResponse, setGeofenceResponse] = useState();
 
-  const geofence1 = HMSLocation.Geofence.Builder.configure({
-    longitude: 42.0,
-    latitude: 29.0,
-    radius: 20.0,
-    uniqueId: "e00322",
-    conversions: 1,
-    validContinueTime: 10000.0,
-    dwellDelayTime: 10,
-    notificationInterval: 1,
-  }).build();
+  const geofence1 = {
+      longitude: 42.0,
+      latitude: 29.0,
+      radius: 20.0,
+      uniqueId: 'e00322',
+      conversions: 1,
+      validContinueTime: 10000.0,
+      dwellDelayTime: 10,
+      notificationInterval: 1,
+  };
 
-  const geofence2 = HMSLocation.Geofence.Builder.configure({
-    longitude: 41.0,
-    latitude: 27.0,
-    radius: 340.0,
-    uniqueId: "e00491",
-    conversions: 2,
-    validContinueTime: 1000.0,
-    dwellDelayTime: 10,
-    notificationInterval: 1,
-  }).build();
+  const geofence2 = {
+      longitude: 41.0,
+      latitude: 27.0,
+      radius: 340.0,
+      uniqueId: 'e00491',
+      conversions: 2,
+      validContinueTime: 1000.0,
+      dwellDelayTime: 10,
+      notificationInterval: 1,
+  };
 
   /**
    * Geofence List
    */
-  const geofenceRequest = HMSLocation.Geofence.Request.configure({
-    geofences: [geofence1, geofence2],
-    conversions: 1,
-    coordinate: 1,
-  }).build();
+  const geofenceRequest = {
+      geofences: [geofence1, geofence2],
+      conversions: 1,
+      coordinate: 1,
+  };
 
   const createGeofenceList = useCallback(() => {
-    HMSLocation.Geofence.Native.createGeofenceList(
-      geofenceRequest.geofences,
-      geofenceRequest.conversions,
-      geofenceRequest.coordinate,
-    )
-      .then(res => {
-        console.log(res);
-        setReqCode(parseInt(res.requestCode));
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  });
+      HMSLocation.Geofence.Native.createGeofenceList(
+          geofenceRequest.geofences,
+          geofenceRequest.conversions,
+          geofenceRequest.coordinate,
+      )
+          .then(res => {
+              console.log(res);
+              setReqCode(parseInt(res.requestCode));
+          })
+          .catch(err => {
+              console.log(err);
+          });
+  })
 
   const deleteGeofenceList = useCallback(reqCode => {
-    HMSLocation.Geofence.Native.deleteGeofenceList(reqCode)
-      .then(res => {
-        console.log(res);
-        setReqCode(null);
-      })
-      .catch(err => console.log("ERROR: GeofenceList deletion failed", err));
+      HMSLocation.Geofence.Native.deleteGeofenceList(reqCode)
+          .then(res => {
+              console.log(res);
+              setReqCode(null);
+          })
+          .catch(err => console.log('ERROR: GeofenceList deletion failed', err))
   }, []);
 
   const handleGeofenceEvent = useCallback(geo => {
-    console.log("GEOFENCE : ", geo);
-    setGeofenceResponse(geo);
+      console.log('GEOFENCE : ', geo);
+      setGeofenceResponse(geo);
   });
 
   const addGeofenceEventListener = useCallback(() => {
-    HMSLocation.Geofence.Events.addGeofenceEventListener(handleGeofenceEvent);
-    setGeoSubscribed(true);
+      HMSLocation.Geofence.Events.addGeofenceEventListener(
+          handleGeofenceEvent,
+      );
+      setGeoSubscribed(true);
   }, []);
 
   const removeGeofenceEventListener = useCallback(() => {
-    HMSLocation.Geofence.Events.removeGeofenceEventListener(
-      handleGeofenceEvent,
-    );
-    setGeoSubscribed(false);
-  });
+      HMSLocation.Geofence.Events.removeGeofenceEventListener(
+          handleGeofenceEvent,
+      )
+      setGeoSubscribed(false);
+  })
 
-  const geofenceData =
-    geofenceResponse &&
-    HMSLocation.Geofence.Data.configure(geofenceResponse).build();
+  const geofenceData = geofenceResponse &&
+        HMSLocation.Geofence.Data
+        .configure(geofenceResponse)
+        .build();
 
-  const geofenceLocationData =
-    geofenceData && geofenceData.errorCode === 0 ? (
-      geofenceData.convertingLocation &&
-      geofenceData.convertingLocation.map(loc => (
-        <>
-          <Text style={styles.boldText}>{"  "}Location Data</Text>
-          <View style={styles.spaceBetweenRow}>
-            <Text>
-              <Text>{"    "}Lat</Text>: {loc?.latitude || 0} | <Text>Long</Text>
-              : {loc?.longitude || 0}
-            </Text>
-          </View>
-          <View style={styles.spaceBetweenRow}>
-            <Text>
-              <Text>{"    "}Vertical Accuracy</Text>:{" "}
-              {loc?.verticalAccuracyMeters || 0}
-            </Text>
-          </View>
-          <View style={styles.spaceBetweenRow}>
-            <Text>
-              <Text>{"    "}Accuracy</Text>: {loc?.accuracy || 0}
-            </Text>
-          </View>
-          <View style={styles.spaceBetweenRow}>
-            <Text>
-              <Text>{"    "}Speed</Text>: {loc?.speed || 0}
-            </Text>
-          </View>
-          <View style={styles.spaceBetweenRow}>
-            <Text>
-              <Text>{"    "}Time</Text>: {loc?.time || 0}
-            </Text>
-          </View>
-        </>
-      ))
-    ) : (
+  return (
       <>
-        <Text style={styles.boldText}>{"  "}Error</Text>
-        <View style={styles.spaceBetweenRow}>
-          <Text>
-            <Text>{"    "}Error Code</Text>: {geofenceData?.errorCode}
-          </Text>
-        </View>
-        <View style={styles.spaceBetweenRow}>
-          <Text>
-            <Text>{"    "}Message</Text>:{" "}
-            {geofenceData?.errorMessage || "Unknown"}
+        <View style={styles.sectionContainer}>
+          <View style={styles.spaceBetweenRow}>
+            <Text style={styles.sectionTitle}>Geofence</Text>
+          </View>
+          <View style={styles.centralizeContent}>
+            <Button
+              title={reqCode ? "Remove Geofence" : "Create Geofence"}
+              onPress={() => {
+                  if (reqCode) {
+                      deleteGeofenceList(reqCode)
+                  } else {
+                      createGeofenceList()
+                  }
+              }} />
+              <Button
+                title={geoSubscribed ? "Unsubscribe" : "Subscribe"}
+                onPress={() => {
+                    if (geoSubscribed) {
+                        removeGeofenceEventListener()
+                    } else {
+                        addGeofenceEventListener()
+                    }
+                }} />
+          </View>
+          <View style={styles.spaceBetweenRow}>
+            <Text style={styles.sectionDescription}>
+              <Text style={styles.boldText}>Geofence Request Code</Text>:{' '}
+              {`${reqCode || ''}`}
+            </Text>
+          </View>
+          <Text style={styles.boldText}>
+            {JSON.stringify(geofenceData, null, 2)}
           </Text>
         </View>
       </>
-    );
-
-  console.log("Geo Fence Location Data : ", geofenceData);
-
-  return (
-    <>
-      <View style={styles.sectionContainer}>
-        <View style={styles.spaceBetweenRow}>
-          <Text style={styles.sectionTitle}>Geofence</Text>
-        </View>
-        <View style={styles.spaceAroundContent}>
-          <Button
-            title={reqCode ? "Remove Geofence" : "Create Geofence"}
-            onPress={() => {
-              if (reqCode) {
-                deleteGeofenceList(reqCode);
-              } else {
-                createGeofenceList();
-              }
-            }}
-          />
-          <Button
-            title={geoSubscribed ? "Unsubscribe" : "Subscribe"}
-            onPress={() => {
-              if (geoSubscribed) {
-                removeGeofenceEventListener();
-              } else {
-                addGeofenceEventListener();
-              }
-            }}
-          />
-        </View>
-        <View style={styles.spaceBetweenRow}>
-          <Text style={styles.sectionDescription}>
-            <Text style={styles.boldText}>Geofence Request Code</Text>:{" "}
-            {`${reqCode || ""}`}
-          </Text>
-        </View>
-        {geofenceData ? (
-          <>
-            <View style={styles.spaceBetweenRow}>
-              <Text style={styles.sectionDescription}>
-                <Text style={styles.boldText}>Converting Geofence List</Text>:{" "}
-                {`${geofenceData.convertingGeofenceList.map(
-                  geo => geo.uniqueId,
-                ) || ""}`}
-              </Text>
-            </View>
-            <View>
-              <Text style={styles.sectionDescription}>
-                <Text style={styles.boldText}>Conversion</Text>:{" "}
-                {`${geofenceData.conversion || ""}`}
-              </Text>
-            </View>
-            <View>
-              <Text style={styles.sectionDescription}>
-                <Text style={styles.boldText}>Converting Location</Text>{" "}
-              </Text>
-              {geofenceLocationData}
-            </View>
-          </>
-        ) : null}
-      </View>
-    </>
-  );
-};
+  )
+}
 
 const ActivityIdentification = () => {
   const [idReqCode, setIdReqCode] = useState();
 
-  const [identificationSubscribed, setIdentificationSubscribed] = useState(
-    false,
-  );
+  const [identificationSubscribed, setIdentificationSubscribed] = useState(false);
 
   const [identificationResponse, setIdentificationResponse] = useState();
 
   // Activity Identification
   const createActivityIdentification = useCallback(() => {
-    HMSLocation.ActivityIdentification.Native.createActivityIdentificationUpdates(
-      2000,
-    )
-      .then(res => {
-        console.log(res);
-        setIdReqCode(res.requestCode);
-      })
-      .catch(err => console.log("ERROR: Activity identification failed", err));
+      HMSLocation.ActivityIdentification.Native.createActivityIdentificationUpdates(2000)
+          .then(res => {
+              console.log(res);
+              setIdReqCode(res.requestCode);
+          })
+          .catch(err => console.log('ERROR: Activity identification failed', err));
   }, []);
   const removeActivityIdentification = useCallback(idReqCode => {
-    HMSLocation.ActivityIdentification.Native.deleteActivityIdentificationUpdates(
-      idReqCode,
-    )
-      .then(res => {
-        console.log(res);
-        setIdReqCode(null);
-      })
-      .catch(err =>
-        console.log("ERROR: Activity identification deletion failed", err),
-      );
+      HMSLocation.ActivityIdentification.Native.deleteActivityIdentificationUpdates(idReqCode)
+          .then(res => {
+              console.log(res);
+              setIdReqCode(null);
+          })
+          .catch(err => console.log('ERROR: Activity identification deletion failed', err));
   }, []);
 
   const handleActivityIdentification = useCallback(act => {
-    console.log("ACTIVITY : ", act);
-    setIdentificationResponse(act);
+      console.log('ACTIVITY : ', act);
+      setIdentificationResponse(act);
   }, []);
 
   const addActivityIdentificationEventListener = useCallback(() => {
-    HMSLocation.ActivityIdentification.Events.addActivityIdentificationEventListener(
-      handleActivityIdentification,
-    );
-    setIdentificationSubscribed(true);
+      HMSLocation.ActivityIdentification.Events.addActivityIdentificationEventListener(
+          handleActivityIdentification,
+      );
+      setIdentificationSubscribed(true);
   }, []);
 
   const removeActivityIdentificationEventListener = useCallback(() => {
-    HMSLocation.ActivityIdentification.Events.removeActivityIdentificationEventListener(
-      handleActivityIdentification,
-    );
-    setIdentificationSubscribed(false);
+      HMSLocation.ActivityIdentification.Events.removeActivityIdentificationEventListener(
+          handleActivityIdentification,
+      );
+      setIdentificationSubscribed(false);
   }, []);
 
-  const identificationDatas =
-    identificationResponse &&
-    identificationResponse.activityIdentificationDatas &&
-    identificationResponse.activityIdentificationDatas.map(idData => (
-      <View key={Math.random()}>
-        <Text style={styles.sectionDescription}>
-          <Text style={styles.boldText}>Activity Data</Text>:{" "}
-        </Text>
-        <Text style={styles.activityData}>
-          <Text>Possibility</Text>: {`${idData.possibility}`} |{" "}
-          <Text>Identification Activity</Text>:{" "}
-          {`${idData.identificationActivity}`}
-        </Text>
-      </View>
-    ));
-
   return (
-    <>
-      <View style={styles.sectionContainer}>
-        <View style={styles.spaceBetweenRow}>
-          <Text style={styles.sectionTitle}>Activity Identification</Text>
-        </View>
-        <View style={styles.spaceAroundContent}>
-          <Button
-            title={idReqCode ? "Remove Identification" : "Get Identification"}
-            onPress={() => {
-              if (idReqCode) {
-                removeActivityIdentification(idReqCode);
-              } else {
-                createActivityIdentification(2000);
+      <>
+        <View style={styles.sectionContainer}>
+          <View style={styles.spaceBetweenRow}>
+            <Text style={styles.sectionTitle}>Activity Identification</Text>
+          </View>
+          <View style={styles.centralizeContent}>
+            <Button
+              title={
+                  idReqCode ?
+                      "Remove Identification" :
+                      "Get Identification"
               }
-            }}
-          />
-          <Button
-            title={identificationSubscribed ? "Unsubscribe" : "Subscribe"}
-            onPress={() => {
-              if (identificationSubscribed) {
-                removeActivityIdentificationEventListener();
-              } else {
-                addActivityIdentificationEventListener();
-              }
-            }}
-          />
-        </View>
-        <View style={styles.spaceBetweenRow}>
-          <Text style={styles.sectionDescription}>
-            <Text style={styles.boldText}>Activity Request Code</Text>:{" "}
-            {`${idReqCode || ""}`}
-          </Text>
-        </View>
-        {identificationDatas ? (
+              onPress={() => {
+                  if (idReqCode) {
+                      removeActivityIdentification(idReqCode)
+                  } else {
+                      createActivityIdentification(2000)
+                  }
+              }} />
+              <Button
+                title={identificationSubscribed ? "Unsubscribe" : "Subscribe"}
+                onPress={() => {
+                    if (identificationSubscribed) {
+                        removeActivityIdentificationEventListener()
+                    } else {
+                        addActivityIdentificationEventListener()
+                    }
+                }} />
+          </View>
           <View style={styles.spaceBetweenRow}>
             <Text style={styles.sectionDescription}>
-              <Text style={styles.boldText}>Time</Text>:{" "}
-              {`${identificationResponse?.time || ""}`} |{" "}
-              <Text style={styles.boldText}>Elapsed Time</Text>:{" "}
-              {`${identificationResponse?.elapsedTimeFromReboot || ""}`}
+              <Text style={styles.boldText}>Activity Request Code</Text>:{' '}
+              {`${idReqCode || ''}`}
             </Text>
           </View>
-        ) : null}
-        {identificationDatas ? (
-          <View>
-            <Text style={styles.sectionDescription}>
-              <Text style={styles.boldText}>Most Activity Data</Text>:{" "}
-            </Text>
-            <Text style={styles.activityData}>
-              <Text>Possibility</Text>:{" "}
-              {`${identificationResponse?.mostActivityIdentification
-                ?.possibility || ""}`}{" "}
-              | <Text>Identification Activity</Text>:{" "}
-              {`${identificationResponse?.mostActivityIdentification
-                ?.identificationActivity || ""}`}
+          <View style={styles.spaceBetweenRow}>
+            <Text style={styles.monospaced}>
+              {JSON.stringify(identificationResponse, null, 2)}
             </Text>
           </View>
-        ) : null}
-        {identificationDatas}
-      </View>
-    </>
+        </View>
+      </>
   );
-};
+}
 
 const ActivityConversion = () => {
   const [convReqCode, setConvReqCode] = useState();
@@ -742,152 +585,120 @@ const ActivityConversion = () => {
 
   // Activity Conversion
   const handleActivityConversion = useCallback(conv => {
-    console.log("CONVERSION : ", conv);
-    setConversionResponse(conv);
+      console.log('CONVERSION : ', conv);
+      setConversionResponse(conv);
   }, []);
 
   const createConversionUpdates = useCallback(() => {
-    HMSLocation.ActivityIdentification.Native.createActivityConversionUpdates([
-      // STILL
-      {
-        conversionType:
-          HMSLocation.ActivityIdentification.ActivityConversions
-            .ENTER_ACTIVITY_CONVERSION,
-        activityType: HMSLocation.ActivityIdentification.Activities.STILL,
-      },
-      {
-        conversionType:
-          HMSLocation.ActivityIdentification.ActivityConversions
-            .EXIT_ACTIVITY_CONVERSION,
-        activityType: HMSLocation.ActivityIdentification.Activities.STILL,
-      },
+      HMSLocation.ActivityIdentification.Native.createActivityConversionUpdates(
+          [
+              // STILL
+              {
+                  conversionType: HMSLocation.ActivityIdentification.ActivityConversions.ENTER_ACTIVITY_CONVERSION,
+                  activityType: HMSLocation.ActivityIdentification.Activities.STILL
+              },
+              {
+                  conversionType: HMSLocation.ActivityIdentification.ActivityConversions.EXIT_ACTIVITY_CONVERSION,
+                  activityType: HMSLocation.ActivityIdentification.Activities.STILL
+              },
 
-      // ON FOOT
-      {
-        conversionType:
-          HMSLocation.ActivityIdentification.ActivityConversions
-            .ENTER_ACTIVITY_CONVERSION,
-        activityType: HMSLocation.ActivityIdentification.Activities.FOOT,
-      },
-      {
-        conversionType:
-          HMSLocation.ActivityIdentification.ActivityConversions
-            .EXIT_ACTIVITY_CONVERSION,
-        activityType: HMSLocation.ActivityIdentification.Activities.FOOT,
-      },
+              // ON FOOT
+              {
+                  conversionType: HMSLocation.ActivityIdentification.ActivityConversions.ENTER_ACTIVITY_CONVERSION,
+                  activityType: HMSLocation.ActivityIdentification.Activities.FOOT
+              },
+              {
+                  conversionType: HMSLocation.ActivityIdentification.ActivityConversions.EXIT_ACTIVITY_CONVERSION,
+                  activityType: HMSLocation.ActivityIdentification.Activities.FOOT
+              },
 
-      // RUNNING
-      {
-        conversionType:
-          HMSLocation.ActivityIdentification.ActivityConversions
-            .ENTER_ACTIVITY_CONVERSION,
-        activityType: HMSLocation.ActivityIdentification.Activities.RUNNING,
-      },
-      {
-        conversionType:
-          HMSLocation.ActivityIdentification.ActivityConversions
-            .EXIT_ACTIVITY_CONVERSION,
-        activityType: HMSLocation.ActivityIdentification.Activities.RUNNING,
-      },
-    ])
-      .then(res => {
-        console.log(res);
-        setConvReqCode(res.requestCode);
-      })
-      .catch(err =>
-        console.log("ERROR: Activity Conversion creation failed", err),
-      );
+              // RUNNING
+              {
+                  conversionType: HMSLocation.ActivityIdentification.ActivityConversions.ENTER_ACTIVITY_CONVERSION,
+                  activityType: HMSLocation.ActivityIdentification.Activities.RUNNING
+              },
+              {
+                  conversionType: HMSLocation.ActivityIdentification.ActivityConversions.EXIT_ACTIVITY_CONVERSION,
+                  activityType: HMSLocation.ActivityIdentification.Activities.RUNNING
+              }
+          ])
+          .then(res => {
+              console.log(res);
+              setConvReqCode(res.requestCode);
+          })
+          .catch(err => console.log('ERROR: Activity Conversion creation failed', err));
   }, []);
 
   const deleteConversionUpdates = useCallback(convReqCode => {
-    HMSLocation.ActivityIdentification.Native.deleteActivityConversionUpdates(
-      convReqCode,
-    )
-      .then(res => {
-        console.log(res);
-        setConvReqCode(null);
-      })
-      .catch(err =>
-        console.log("ERROR: Activity Conversion deletion failed", err),
-      );
+      HMSLocation.ActivityIdentification.Native.deleteActivityConversionUpdates(convReqCode)
+          .then(res => {
+              console.log(res);
+              setConvReqCode(null);
+          })
+          .catch(err => console.log('ERROR: Activity Conversion deletion failed', err));
   }, []);
 
   const addActivityConversionEventListener = useCallback(() => {
-    HMSLocation.ActivityIdentification.Events.addActivityConversionEventListener(
-      handleActivityConversion,
-    );
-    setConversionSubscribed(true);
+      HMSLocation.ActivityIdentification.Events.addActivityConversionEventListener(
+          handleActivityConversion,
+      );
+      setConversionSubscribed(true);
   }, []);
 
   const removeActivityConversionEventListener = useCallback(() => {
-    HMSLocation.ActivityIdentification.Events.removeActivityConversionEventListener(
-      handleActivityConversion,
-    );
-    setConversionSubscribed(false);
+      HMSLocation.ActivityIdentification.Events.removeActivityConversionEventListener(
+          handleActivityConversion,
+      );
+      setConversionSubscribed(false);
   }, []);
 
-  const conversionDatas =
-    conversionResponse &&
-    conversionResponse.activityConversionDatas &&
-    conversionResponse.activityConversionDatas.map(conData => (
-      <View key={Math.random()}>
-        <Text style={styles.sectionDescription}>
-          <Text style={styles.boldText}>Conversion Data</Text>:{" "}
-        </Text>
-        <Text style={styles.activityData}>
-          <Text>Elapsed Time From Reboot</Text>:{" "}
-          {`${conData?.elapsedTimeFromReboot || ""}`}
-        </Text>
-        <Text style={styles.activityData}>
-          <Text>Activity Type</Text>: {`${conData?.activityType || ""}`}
-        </Text>
-        <Text style={styles.activityData}>
-          <Text>Conversion Type</Text>: {`${conData?.conversionType || ""}`}
-        </Text>
-      </View>
-    ));
-
   return (
-    <>
-      <View style={styles.sectionContainer}>
-        {/* Conversion */}
-        <View style={styles.spaceBetweenRow}>
-          <Text style={styles.sectionTitle}>Conversion Update</Text>
-        </View>
-        <View style={styles.spaceAroundContent}>
-          <Button
-            title={convReqCode ? "Remove Update" : "Create Update"}
-            onPress={() => {
-              if (convReqCode) {
-                console.log("CONV REQ CODE BEFORE REMOVAL", convReqCode);
-                deleteConversionUpdates(convReqCode);
-              } else {
-                createConversionUpdates();
+      <>
+        <View style={styles.sectionContainer}>
+          {/* Conversion */}
+          <View style={styles.spaceBetweenRow}>
+            <Text style={styles.sectionTitle}>Conversion Update</Text>
+          </View>
+          <View style={styles.centralizeContent}>
+            <Button
+              title={
+                  convReqCode ?
+                      "Remove Update" :
+                      "Create Update"
               }
-            }}
-          />
-          <Button
-            title={conversionSubscribed ? "Unsubscribe" : "Subscribe"}
-            onPress={() => {
-              if (conversionSubscribed) {
-                removeActivityConversionEventListener();
-              } else {
-                addActivityConversionEventListener();
-              }
-            }}
-          />
+              onPress={() => {
+                  if (convReqCode) {
+                      console.log('CONV REQ CODE BEFORE REMOVAL', convReqCode);
+                      deleteConversionUpdates(convReqCode)
+                  } else {
+                      createConversionUpdates()
+                  }
+              }} />
+              <Button
+                title={conversionSubscribed ? "Unsubscribe" : "Subscribe"}
+                onPress={() => {
+                    if (conversionSubscribed) {
+                        removeActivityConversionEventListener()
+                    } else {
+                        addActivityConversionEventListener()
+                    }
+                }} />
+          </View>
+          <View style={styles.spaceBetweenRow}>
+            <Text style={styles.sectionDescription}>
+              <Text style={styles.boldText}>Conversion Request Code</Text>:{' '}
+              {`${convReqCode || ''}`}
+            </Text>
+          </View>
+          <View style={styles.spaceBetweenRow}>
+            <Text style={styles.monospaced}>
+              {JSON.stringify(conversionResponse, null, 2)}
+            </Text>
+          </View>
         </View>
-        <View style={styles.spaceBetweenRow}>
-          <Text style={styles.sectionDescription}>
-            <Text style={styles.boldText}>Conversion Request Code</Text>:{" "}
-            {`${convReqCode || ""}`}
-          </Text>
-        </View>
-        {conversionDatas}
-      </View>
-    </>
+      </>
   );
-};
+}
 
 const LocationPage = ({navigation}) => {
   return (
@@ -914,6 +725,8 @@ const LocationPage = ({navigation}) => {
             <LocationInfo />
             <View style={styles.divider} />
             <MockLocation />
+            <View style={styles.divider} />
+            <LocationEnhance />
             <View style={styles.divider} />
             <Geofence />
             <View style={styles.divider} />

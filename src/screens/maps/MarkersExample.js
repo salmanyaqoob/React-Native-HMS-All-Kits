@@ -16,7 +16,7 @@ Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
 
 import React, {Component} from 'react';
 import {View, Text, ToastAndroid} from 'react-native';
-import {Marker, Callout} from 'react-native-hms-map';
+import {Marker, Callout} from "@hmscore/react-native-hms-map";
 
 import {styles} from './styles';
 

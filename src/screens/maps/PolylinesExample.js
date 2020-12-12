@@ -16,7 +16,7 @@ Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
 
 import React, {Component} from 'react';
 import {View, ToastAndroid} from 'react-native';
-import {Polyline} from 'react-native-hms-map';
+import {Polyline} from "@hmscore/react-native-hms-map";
 
 const polylines1 = [
   {latitude: 41.01929, longitude: 28.967267},

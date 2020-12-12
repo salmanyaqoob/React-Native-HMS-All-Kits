@@ -16,7 +16,7 @@ Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
 
 import React, {Component} from 'react';
 import {View, ToastAndroid} from 'react-native';
-import {Overlay} from 'react-native-hms-map';
+import {Overlay} from "@hmscore/react-native-hms-map";
 
 const image1 =
   'https://huaweimobileservices.com/wp-content/uploads/2020/02/appgallerynew-400x400.png';

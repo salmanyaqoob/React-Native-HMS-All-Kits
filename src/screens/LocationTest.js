@@ -14,9 +14,16 @@ import {headerStyles} from "../styles/headerStyles";
 
 import {Colors} from "react-native/Libraries/NewAppScreen";
 
-import HMSLocation from "react-native-hms-location";
+import HMSLocation from '@hmscore/react-native-hms-location';
 
-const Header = () => (
+const Header = () => {
+  // Initialize Location Kit
+useEffect(() => {
+  HMSLocation.LocationKit.Native.init()
+      .then(_ => console.log("Done loading"))
+      .catch(ex => console.log("Error while initializing." + ex));
+}, []);
+  return (
   <View>
     <View style={headerStyles.headerSection}>
       <View style={headerStyles.headerTitleWrapper}>
@@ -30,7 +37,7 @@ const Header = () => (
       </View>
     </View>
   </View>
-);
+)};
 
 const LocationTestPage = () => {
   const [loadingLocation, setLoadingLocation] = useState(true);
@@ -42,13 +49,13 @@ const LocationTestPage = () => {
   const [lastknowCheck, setLastknowCheck] = useState(true);
 
   useEffect(() => {
-    console.log("Check Location useEffect");
+    // console.log("Check Location useEffect");
 
     // Check location permissions
     HMSLocation.FusedLocation.Native.hasPermission()
       .then(result => {
-        let hasPermission = result === "true";
-        setHasLocationPermission(result);
+        let hasPermission = result.hasPermission === true;
+        setHasLocationPermission(hasPermission);
       })
       .catch(ex =>
         console.log("Error while getting location permission info: " + ex),
@@ -63,16 +70,16 @@ const LocationTestPage = () => {
         checkLocationSettings();
       }
 
-      if (
-        hasLocationPermission === true &&
-        typeof locationSettings === "object"
-      ) {
-        getLocationAvailability();
-      }
+      // if (
+      //   hasLocationPermission === true &&
+      //   locationSettings === true
+      // ) {
+      //   getLocationAvailability();
+      // }
 
       if (
         hasLocationPermission === true &&
-        locationSettings !== false &&
+        locationSettings === true &&
         typeof locationCoordinates === "undefined" &&
         lastknowCheck === true
       ) {
@@ -81,22 +88,22 @@ const LocationTestPage = () => {
 
       if (
         hasLocationPermission === true &&
-        locationSettings !== false &&
-        locationAvailable === false &&
+        locationSettings === true &&
         typeof locationCoordinates === "undefined" &&
         lastknowCheck === false
       ) {
+        console.log("reach to location update -----------");
         addFusedLocationEventListener();
       }
     }
-    if (
-      loadingLocation === false &&
-      typeof locationUpdateId !== "undefined" &&
-      typeof locationCoordinates !== "undefined" &&
-      locationUpdateId !== "undefined"
-    ) {
-      removeFusedLocationEventListener();
-    }
+    // if (
+    //   loadingLocation === false &&
+    //   typeof locationUpdateId !== "undefined" &&
+    //   typeof locationCoordinates !== "undefined" &&
+    //   locationUpdateId !== "undefined"
+    // ) {
+    //   removeFusedLocationEventListener();
+    // }
   }, [
     loadingLocation,
     hasLocationPermission,
@@ -122,29 +129,50 @@ const LocationTestPage = () => {
 
   // Check Location Settings
   const checkLocationSettings = useCallback(() => {
-    const locationRequest = HMSLocation.FusedLocation.Request.configure({
-      id: "e0048e" + Math.random() * 10000,
-      priority:
-        HMSLocation.FusedLocation.PriorityConstants.PRIORITY_HIGH_ACCURACY,
-      interval: 3,
-      numUpdates: 10,
-      fastestInterval: 1000.0,
-      expirationTime: 200000.0,
-      expirationTimeDuration: 200000.0,
-      smallestDisplacement: 0.0,
-      maxWaitTime: 2000000.0,
-      needAddress: true,
+    // const locationRequest = HMSLocation.FusedLocation.Request.configure({
+    //   id: "locationRequest" + Math.random() * 10000,
+    //   priority:
+    //     HMSLocation.FusedLocation.PriorityConstants.PRIORITY_HIGH_ACCURACY,
+    //   interval: 3,
+    //   numUpdates: 10,
+    //   fastestInterval: 1000.0,
+    //   expirationTime: 200000.0,
+    //   expirationTimeDuration: 200000.0,
+    //   smallestDisplacement: 0.0,
+    //   maxWaitTime: 2000000.0,
+    //   needAddress: false,
+    //   language: "en",
+    //   countryCode: "en",
+    // }).build();
+
+    const locationRequest = {
+      id: "locationRequest" + Math.random() * 10000,
+      priority: HMSLocation.FusedLocation.PriorityConstants.PRIORITY_HIGH_ACCURACY,
+      interval: 5000,
+      numUpdates: 20,
+      fastestInterval: 6000,
+      expirationTime: 100000,
+      expirationTimeDuration: 100000,
+      smallestDisplacement: 0,
+      maxWaitTime: 1000.0,
+      needAddress: false,
       language: "en",
       countryCode: "en",
-    }).build();
+  };
 
-    const locationSettingsRequest = HMSLocation.FusedLocation.SettingsRequest.configure(
-      {
-        locationRequests: [locationRequest],
-        alwaysShow: false,
-        needBle: false,
-      },
-    ).build();
+  const locationSettingsRequest = {
+    locationRequests: [locationRequest],
+    alwaysShow: false,
+    needBle: false,
+};
+
+    // const locationSettingsRequest = HMSLocation.FusedLocation.SettingsRequest.configure(
+    //   {
+    //     locationRequests: [locationRequest],
+    //     alwaysShow: false,
+    //     needBle: false,
+    //   },
+    // ).build();
 
     HMSLocation.FusedLocation.Native.checkLocationSettings(
       locationSettingsRequest,
@@ -152,14 +180,26 @@ const LocationTestPage = () => {
       .then(res => {
         console.log("locationSettings", res);
         console.log("locationSettings", typeof locationSettings);
-        if (res == "check_setting_again") {
+        if (
+          res === true || (
+            res.locationSettingsStates.isGpsPresent == true
+          && 
+          res.locationSettingsStates.isGpsUsable == true
+          && 
+          res.locationSettingsStates.isLocationUsable == true
+          )
+          ) {
+            setLocationSettings(true);
+        } else {
           setLocationSettings(false);
           setHasLocationPermission(false);
-        } else if (typeof res === "object") {
-          setLocationSettings(res);
         }
       })
-      .catch(ex => console.log("Error while getting location settings. " + ex));
+      .catch(ex => {
+        console.log("Error while getting location settings. " + ex);
+        // setLocationSettings(false);
+        // setHasLocationPermission(false);
+      });
   });
 
   // Get Location Availability
@@ -168,7 +208,7 @@ const LocationTestPage = () => {
       .then(available => {
         console.log("available", typeof available);
         console.log("available", available);
-        let hasavailable = available === "true";
+        let hasavailable = available.isLocationAvailable === "true";
         setLocationAvailable(hasavailable);
       })
       .catch(err => {
@@ -194,10 +234,9 @@ const LocationTestPage = () => {
 
   // Request Location Update
   const requestLocationUpdate = useCallback(() => {
-    const LocationRequest = HMSLocation.FusedLocation.Request.configure({
-      id: "e0048e" + Math.random() * 10000,
-      priority:
-        HMSLocation.FusedLocation.PriorityConstants.PRIORITY_HIGH_ACCURACY,
+    const LocationRequest = {
+      id: 'e0048e' + Math.random() * 10000,
+      priority: HMSLocation.FusedLocation.PriorityConstants.PRIORITY_HIGH_ACCURACY,
       interval: 3,
       numUpdates: 1,
       fastestInterval: 1000.0,
@@ -206,16 +245,16 @@ const LocationTestPage = () => {
       smallestDisplacement: 0.0,
       maxWaitTime: 1000.0,
       needAddress: false,
-      language: "en",
-      countryCode: "en",
-    }).build();
+      language: 'en',
+      countryCode: 'en',
+  };
 
     HMSLocation.FusedLocation.Native.requestLocationUpdatesWithCallback(
       LocationRequest,
     )
-      .then(({id}) => {
-        setLocationUpdateId(id);
-        console.log("id", id);
+      .then(({requestCode}) => {
+        setLocationUpdateId(requestCode);
+        console.log("id", requestCode);
       })
       .catch(ex =>
         console.log("Exception while requestLocationUpdatesWithCallback " + ex),
@@ -230,7 +269,7 @@ const LocationTestPage = () => {
 
   const handleLocationUpdate = useCallback(location => {
     console.log(location);
-    setLocationCoordinates(location);
+    setLocationCoordinates(location.hwLocationList[0]);
   }, []);
 
   const addFusedLocationEventListener = useCallback(() => {

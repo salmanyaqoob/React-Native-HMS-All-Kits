@@ -222,15 +222,16 @@ dependencies {
         exclude group:'com.facebook.flipper'
     }
 
+    // implementation 'com.huawei.hms:base:5.0.3.301'
     implementation 'com.huawei.hms:hwid:3.0.3.301'
 //    implementation 'com.google.android.gms:play-services-auth:17.0.0'
     implementation "com.google.android.gms:play-services-base:17.2.1"
 
 
-    implementation 'com.huawei.hms:maps:4.0.1.301'
+//    implementation 'com.huawei.hms:maps:4.0.1.301'
     implementation 'com.huawei.hms:hianalytics:4.0.3.300'
     implementation 'com.huawei.hms:push:4.0.3.300'
-    implementation 'com.huawei.agconnect:agconnect-core:1.3.0.300'
+    implementation 'com.huawei.agconnect:agconnect-core:1.4.1.300'
 
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";

@@ -29,6 +29,8 @@
     "*.json"
   ],
   "dependencies": {
+    "@hmscore/react-native-hms-location": "./hms-packages/new/react-native-hms-location",
+    "@hmscore/react-native-hms-map": "^5.0.3-302-01",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/native": "^5.4.3",
     "@react-navigation/stack": "^5.4.0",
@@ -38,8 +40,6 @@
     "react-native-gesture-handler": "^1.6.1",
     "react-native-ha-interface": "./hms-packages/react-native-ha-interface",
     "react-native-hms-ads": "./hms-packages/react-native-hms-ads",
-    "react-native-hms-location": "./hms-packages/react-native-hms-location",
-    "react-native-hms-map": "./hms-packages/react-native-hms-map",
     "react-native-hms-site": "./hms-packages/react-native-hms-site",
     "react-native-hwpush": "./hms-packages/react-native-hwpush",
     "react-native-reanimated": "^1.9.0",

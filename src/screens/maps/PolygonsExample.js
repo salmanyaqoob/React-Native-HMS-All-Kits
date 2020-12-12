@@ -16,7 +16,7 @@ Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
 
 import React, {Component} from 'react';
 import {View, ToastAndroid} from 'react-native';
-import {Polygon} from 'react-native-hms-map';
+import {Polygon} from "@hmscore/react-native-hms-map";
 
 const polygons1 = [
   {latitude: 41.01929, longitude: 28.967267},
