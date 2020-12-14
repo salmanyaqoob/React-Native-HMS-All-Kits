@@ -15,6 +15,7 @@ import {Colors} from "react-native/Libraries/NewAppScreen";
 import Home from "./screens/Home";
 import LocationPage from "./screens/Location";
 import LocationTestPage from "./screens/LocationTest";
+import LocationTestClassPage from "./screens/LocationTestClass";
 import Check from "./screens/Check";
 import Map from "./screens/Map";
 import Push from "./screens/Push";
@@ -46,6 +47,13 @@ const AppNavigator = createStackNavigator(
         headerTitle: "HMS Location Test",
       },
       path: "LocationTest",
+    },
+    LocationTestClass: {
+      screen: LocationTestClassPage,
+      navigationOptions: {
+        headerTitle: "HMS Location Test",
+      },
+      path: "LocationTestClass",
     },
 
     Check: {

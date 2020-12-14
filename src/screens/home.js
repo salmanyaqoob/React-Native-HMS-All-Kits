@@ -14,6 +14,8 @@ import {Colors} from "react-native/Libraries/NewAppScreen";
 
 import {headerStyles} from "../styles/headerStyles";
 
+import DeviceInfo from 'react-native-device-info';
+
 const Home = ({navigation}) => {
   const commingSoon = () => {
     toast("Comming Soon");

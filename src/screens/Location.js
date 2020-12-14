@@ -712,7 +712,7 @@ const LocationPage = ({navigation}) => {
             <Button
               title="Test Location flow"
               onPress={() => {
-                navigation.navigate("LocationTest");
+                navigation.navigate("LocationTestClass");
               }}
             />
             <View style={styles.divider} />
